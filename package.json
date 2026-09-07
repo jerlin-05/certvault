@@ -1,0 +1,32 @@
+{
+  "name": "certvault",
+  "version": "1.0.0",
+  "private": true,
+  "description": "CertVault — track certificate expiry dates and get email alerts before they lapse.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "cron": "node scripts/cron-worker.js",
+    "seed:admin": "node scripts/create-admin.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "date-fns": "^3.6.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^7.6.0",
+    "mongoose": "^8.5.1",
+    "next": "14.2.35",
+    "node-cron": "^3.0.3",
+    "nodemailer": "^6.9.14",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.19",
+    "dotenv": "^16.4.5",
+    "postcss": "^8.4.40",
+    "tailwindcss": "^3.4.7"
+  }
+}
