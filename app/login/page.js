@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import PasswordField from "@/components/PasswordField";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -60,13 +61,21 @@ export default function LoginPage() {
             onChange={(v) => setForm({ ...form, email: v })}
             required
           />
-          <Field
-            label="Password"
-            type="password"
-            value={form.password}
-            onChange={(v) => setForm({ ...form, password: v })}
-            required
-          />
+          <div>
+            <PasswordField
+              label="Password"
+              value={form.password}
+              onChange={(v) => setForm({ ...form, password: v })}
+              required
+              autoComplete="current-password"
+            />
+            <Link
+              href="/forgot-password"
+              className="mt-1.5 inline-block text-xs text-gold-dark underline"
+            >
+              Forgot password?
+            </Link>
+          </div>
 
           {error && (
             <p className="rounded-sm bg-rust-light px-3 py-2 text-sm text-rust">

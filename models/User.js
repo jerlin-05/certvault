@@ -11,6 +11,8 @@ const UserSchema = new mongoose.Schema(
       lowercase: true,
     },
     password: { type: String, required: true },
+    resetPasswordTokenHash: { type: String, default: null },
+    resetPasswordExpires: { type: Date, default: null },
   },
   { timestamps: true }
 );
