@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-
+import PasswordField from "@/components/PasswordField";
 export default function RegisterPage() {
   const router = useRouter();
   const [form, setForm] = useState({ name: "", email: "", password: "" });
@@ -67,15 +67,14 @@ export default function RegisterPage() {
             onChange={(v) => setForm({ ...form, email: v })}
             required
           />
-          <Field
+          <PasswordField
             label="Password"
-            type="password"
             value={form.password}
             onChange={(v) => setForm({ ...form, password: v })}
             required
             hint="At least 8 characters"
+            autoComplete="new-password"
           />
-
           {error && (
             <p className="rounded-sm bg-rust-light px-3 py-2 text-sm text-rust">
               {error}
