@@ -13,7 +13,7 @@
     @apply bg-gold/30 text-ink;
   }
   :focus-visible {
-    outline: 2px solid #B8863B;
+    outline: 2px solid #C9A15A;
     outline-offset: 2px;
   }
 }

@@ -108,7 +108,7 @@ export default function CertificateModal({ initial, onClose, onSaved }) {
         exit={{ opacity: 0, scale: 0.96, y: 10 }}
         transition={{ type: "spring", stiffness: 300, damping: 28 }}
         onClick={(e) => e.stopPropagation()}
-        className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-sm border border-ink/10 bg-paper shadow-card"
+        className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-xl border border-ink/10 bg-paper shadow-card"
       >
         <div className="flex items-center justify-between border-b border-ink/10 px-6 py-4">
           <h2 className="font-display text-lg text-ink">
@@ -127,7 +127,7 @@ export default function CertificateModal({ initial, onClose, onSaved }) {
           <button
             type="button"
             onClick={() => fileInputRef.current?.click()}
-            className="flex h-32 w-full items-center justify-center overflow-hidden rounded-sm border border-dashed border-ink/20 bg-ink-light/[0.03] transition hover:border-gold"
+            className="flex h-32 w-full items-center justify-center overflow-hidden rounded-xl border border-dashed border-ink/20 bg-ink-light/[0.03] transition hover:border-gold"
           >
             {imagePreview ? (
               // eslint-disable-next-line @next/next/no-img-element
@@ -239,7 +239,7 @@ export default function CertificateModal({ initial, onClose, onSaved }) {
           </Field>
 
           {error && (
-            <p className="rounded-sm bg-rust-light px-3 py-2 text-sm text-rust">
+            <p className="rounded-xl bg-rust-light px-3 py-2 text-sm text-rust">
               {error}
             </p>
           )}
@@ -248,14 +248,14 @@ export default function CertificateModal({ initial, onClose, onSaved }) {
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 rounded-sm border border-ink/15 py-2.5 text-sm font-medium text-ink transition hover:border-ink/40"
+              className="flex-1 rounded-xl border border-ink/15 py-2.5 text-sm font-medium text-ink transition hover:border-ink/40"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={saving}
-              className="flex-1 rounded-sm bg-ink py-2.5 text-sm font-medium text-paper transition hover:bg-ink-light disabled:opacity-60"
+              className="flex-1 rounded-xl bg-gold py-2.5 text-sm font-semibold text-ink transition hover:bg-gold-light disabled:opacity-60"
             >
               {saving ? "Saving…" : isEdit ? "Save changes" : "Add certificate"}
             </button>

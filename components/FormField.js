@@ -21,7 +21,7 @@ export default function FormField({
         autoComplete={autoComplete}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full rounded-sm border border-ink/15 bg-paper px-3.5 py-2.5 text-sm text-ink outline-none transition placeholder:text-slate-light/70 focus:border-gold focus:ring-1 focus:ring-gold/25"
+        className="w-full rounded-xl border border-ink/15 bg-paper-card px-3.5 py-3 text-sm text-ink outline-none transition placeholder:text-slate-light/70 focus:border-gold focus:ring-1 focus:ring-gold/25"
       />
       {hint && (
         <span className="mt-1 block text-xs text-slate-light">{hint}</span>

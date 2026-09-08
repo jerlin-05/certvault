@@ -67,7 +67,7 @@ function ResetPasswordForm() {
       </h1>
 
       {!token || !email ? (
-        <p className="mt-6 rounded-sm bg-rust-light px-3 py-2 text-sm text-rust">
+        <p className="mt-6 rounded-xl bg-rust-light px-3 py-2 text-sm text-rust">
           This reset link is missing required information. Request a new one
           from the{" "}
           <Link href="/forgot-password" className="underline">
@@ -76,7 +76,7 @@ function ResetPasswordForm() {
           page.
         </p>
       ) : done ? (
-        <div className="mt-8 flex items-start gap-3 rounded-sm bg-forest-light px-4 py-4 text-sm text-forest">
+        <div className="mt-8 flex items-start gap-3 rounded-xl bg-forest-light px-4 py-4 text-sm text-forest">
           <CheckCircle2 size={18} className="mt-0.5 shrink-0" />
           <p>Your password has been reset. Redirecting you to sign in…</p>
         </div>
@@ -99,7 +99,7 @@ function ResetPasswordForm() {
           />
 
           {error && (
-            <p className="rounded-sm bg-rust-light px-3 py-2 text-sm text-rust">
+            <p className="rounded-xl bg-rust-light px-3 py-2 text-sm text-rust">
               {error}
             </p>
           )}
@@ -107,7 +107,7 @@ function ResetPasswordForm() {
           <button
             type="submit"
             disabled={loading}
-            className="group flex w-full items-center justify-center gap-2 rounded-sm bg-ink px-4 py-3 text-sm font-medium text-paper transition hover:bg-ink-light disabled:opacity-60"
+            className="group flex w-full items-center justify-center gap-2 rounded-xl bg-gold px-4 py-3 text-sm font-semibold text-ink transition hover:bg-gold-light disabled:opacity-60"
           >
             {loading ? "Resetting…" : "Reset password"}
             {!loading && (

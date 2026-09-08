@@ -20,6 +20,7 @@ const CertificateSchema = new mongoose.Schema(
     expiryDate: { type: Date, required: true },
     alertDaysBefore: { type: Number, required: true, default: 30, min: 1 },
     alertsSent: { type: [Number], default: [] },
+    archived: { type: Boolean, default: false },
   },
   { timestamps: true }
 );

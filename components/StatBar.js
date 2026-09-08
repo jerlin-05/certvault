@@ -24,30 +24,22 @@ export default function StatBar({ certificates }) {
 
   const toneStyles = {
     ink: "bg-ink/[0.06] text-ink",
-    amber: "bg-amber-light text-amber",
-    rust: "bg-rust-light text-rust",
-    forest: "bg-forest-light text-forest",
-  };
-
-  const toneBar = {
-    ink: "#121B2E",
-    amber: "#C97A2B",
-    rust: "#A1352B",
-    forest: "#2F6844",
+    amber: "bg-amber-light text-amber-dark",
+    rust: "bg-rust-light text-rust-dark",
+    forest: "bg-forest-light text-forest-dark",
   };
 
   return (
-    <div className="grid grid-cols-2 gap-px overflow-hidden rounded-md border border-ink/10 bg-ink/10 shadow-card sm:grid-cols-4">
-      {stats.map((s) => (
+    <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+      {stats.map((s, i) => (
         <motion.div
           key={s.label}
-          whileHover={{ backgroundColor: "rgba(18,27,46,0.02)" }}
-          className="relative flex items-start justify-between gap-3 overflow-hidden bg-paper px-5 py-4"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35, delay: i * 0.05 }}
+          whileHover={{ y: -3 }}
+          className="flex items-center justify-between gap-3 rounded-2xl border border-ink/10 bg-paper-card px-5 py-4 shadow-card"
         >
-          <span
-            className="absolute inset-x-0 top-0 h-[3px]"
-            style={{ backgroundColor: toneBar[s.tone] }}
-          />
           <div>
             <span className="text-xs text-slate">{s.label}</span>
             <p className="mt-1.5 font-display text-2xl text-ink">
@@ -55,9 +47,9 @@ export default function StatBar({ certificates }) {
             </p>
           </div>
           <span
-            className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full ${toneStyles[s.tone]}`}
+            className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${toneStyles[s.tone]}`}
           >
-            <s.icon size={16} strokeWidth={1.9} />
+            <s.icon size={17} strokeWidth={1.9} />
           </span>
         </motion.div>
       ))}

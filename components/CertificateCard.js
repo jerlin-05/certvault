@@ -1,29 +1,26 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import {
-  TriangleAlert,
-  CircleX,
-  ShieldCheck,
-  Pencil,
-  Trash2,
-  Building2,
-  Eye,
-} from "lucide-react";
-import { getCertificateStatus, formatDate } from "@/lib/status";
+import { motion } from "framer-motion";
+import { Pencil, Trash2, Building2, Archive, ArchiveRestore } from "lucide-react";
+import { getCertificateStatus, formatDate, daysUntil } from "@/lib/status";
 import { getCategoryTheme } from "@/lib/category";
 
 const toneStyles = {
-  rust: "bg-rust-light text-rust",
-  amber: "bg-amber-light text-amber",
-  forest: "bg-forest-light text-forest",
+  rust: "bg-rust-light text-rust-dark",
+  amber: "bg-amber-light text-amber-dark",
+  forest: "bg-forest-light text-forest-dark",
 };
 
-const toneIcon = {
-  rust: CircleX,
-  amber: TriangleAlert,
-  forest: ShieldCheck,
+const toneDot = {
+  rust: "bg-rust",
+  amber: "bg-amber",
+  forest: "bg-forest",
+};
+
+const toneBar = {
+  rust: "bg-rust",
+  amber: "bg-amber",
+  forest: "bg-forest",
 };
 
 export default function CertificateCard({
@@ -31,124 +28,63 @@ export default function CertificateCard({
   onView,
   onEdit,
   onDelete,
+  onArchive,
 }) {
   const status = getCertificateStatus(certificate);
-  const StatusIcon = toneIcon[status.tone];
-  const isUrgent = status.tone === "rust";
   const theme = getCategoryTheme(certificate.category);
   const CategoryIcon = theme.icon;
 
-  const cardRef = useRef(null);
-  const rawX = useMotionValue(0);
-  const rawY = useMotionValue(0);
-  const rotateX = useSpring(useTransform(rawY, [-0.5, 0.5], [7, -7]), {
-    stiffness: 260,
-    damping: 22,
-  });
-  const rotateY = useSpring(useTransform(rawX, [-0.5, 0.5], [-7, 7]), {
-    stiffness: 260,
-    damping: 22,
-  });
-  const glowX = useTransform(rawX, [-0.5, 0.5], ["0%", "100%"]);
-  const glowY = useTransform(rawY, [-0.5, 0.5], ["0%", "100%"]);
-
-  function handleMouseMove(e) {
-    const rect = cardRef.current?.getBoundingClientRect();
-    if (!rect) return;
-    rawX.set((e.clientX - rect.left) / rect.width - 0.5);
-    rawY.set((e.clientY - rect.top) / rect.height - 0.5);
-  }
-
-  function handleMouseLeave() {
-    rawX.set(0);
-    rawY.set(0);
+  // Progress bar: share of certificate's lifetime already elapsed, clamped 0-100
+  let progressPct = 60;
+  if (certificate.issueDate) {
+    const span = Math.round(
+      (new Date(certificate.expiryDate) - new Date(certificate.issueDate)) /
+        (1000 * 60 * 60 * 24)
+    );
+    const elapsed = span - Math.max(daysUntil(certificate.expiryDate), 0);
+    progressPct = span > 0 ? Math.min(100, Math.max(0, (elapsed / span) * 100)) : 60;
   }
 
   return (
     <motion.div
-      ref={cardRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{ rotateX, rotateY, transformPerspective: 900 }}
-      whileHover={{ y: -6 }}
-      transition={{ type: "spring", stiffness: 300, damping: 22 }}
-      className="group relative flex h-full flex-col overflow-hidden rounded-md border border-ink/10 bg-paper shadow-card"
+      whileHover={{ y: -4 }}
+      transition={{ type: "spring", stiffness: 300, damping: 24 }}
+      className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-ink/10 bg-paper-card shadow-card"
     >
-      {/* Cursor-tracking sheen */}
-      <motion.div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 z-10 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-        style={{
-          background: useTransform(
-            [glowX, glowY],
-            ([gx, gy]) =>
-              `radial-gradient(320px circle at ${gx} ${gy}, rgba(216,167,94,0.14), transparent 70%)`
-          ),
-        }}
-      />
-
-      {/* Category accent rail */}
-      <span
-        className="absolute left-0 top-0 z-10 h-full w-[3px]"
-        style={{ backgroundColor: theme.accent }}
-      />
-
       <button
         type="button"
         onClick={() => onView(certificate)}
-        className="relative block h-40 w-full shrink-0 overflow-hidden border-b border-ink/10 bg-ink-light/[0.03] text-left"
+        className="flex flex-1 flex-col p-5 text-left"
       >
-        {certificate.image?.data ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={`data:${certificate.image.contentType};base64,${certificate.image.data}`}
-            alt={certificate.name}
-            className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.06]"
-          />
-        ) : (
-          <div
-            className="paper-texture flex h-full w-full items-center justify-center"
-            style={{
-              background: `linear-gradient(135deg, ${theme.accent}14, transparent 60%)`,
-            }}
-          >
+        <div className="flex items-start justify-between">
+          {certificate.image?.data ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={`data:${certificate.image.contentType};base64,${certificate.image.data}`}
+              alt={certificate.name}
+              className="h-11 w-11 shrink-0 rounded-xl object-cover"
+            />
+          ) : (
             <span
-              className="flex h-14 w-14 items-center justify-center rounded-full text-paper shadow-[0_4px_10px_rgba(18,27,46,0.25)] transition duration-300 group-hover:scale-105"
+              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-paper"
               style={{ backgroundColor: theme.accent }}
             >
-              <CategoryIcon size={22} strokeWidth={1.75} />
+              <CategoryIcon size={19} strokeWidth={1.75} />
             </span>
-          </div>
-        )}
-
-        <div className="absolute -left-6 -top-6 h-16 w-16 rotate-45 bg-ink/[0.08]" />
-
-        <span
-          className={`absolute right-3 top-3 flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-medium shadow-sm ${toneStyles[status.tone]} ${
-            isUrgent ? "animate-pulse-ring" : ""
-          }`}
-        >
-          <StatusIcon size={12} strokeWidth={2.25} />
-          {status.label}
-        </span>
-
-        <span className="absolute inset-0 flex items-center justify-center bg-ink/0 text-paper opacity-0 transition duration-200 group-hover:bg-ink/30 group-hover:opacity-100">
-          <span className="flex items-center gap-1.5 rounded-full bg-ink/80 px-3 py-1.5 text-xs font-medium backdrop-blur">
-            <Eye size={13} />
-            View certificate
+          )}
+          <span
+            className={`flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-medium ${toneStyles[status.tone]}`}
+          >
+            <span className={`h-1.5 w-1.5 rounded-full ${toneDot[status.tone]}`} />
+            {status.tone === "forest"
+              ? "Active"
+              : status.tone === "amber"
+              ? "Expiring"
+              : "Expired"}
           </span>
-        </span>
-      </button>
-
-      <div className="flex flex-1 flex-col p-5">
-        <div
-          className="flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-wider"
-          style={{ color: theme.accent }}
-        >
-          <CategoryIcon size={12} />
-          {certificate.category || "General"}
         </div>
-        <h3 className="mt-1.5 line-clamp-2 min-h-[2.6rem] font-display text-lg leading-snug text-ink">
+
+        <h3 className="mt-4 line-clamp-2 min-h-[2.6rem] font-display text-lg leading-snug text-ink">
           {certificate.name}
         </h3>
         <p className="mt-1 flex min-h-[1.25rem] items-center gap-1.5 text-sm text-slate">
@@ -160,27 +96,57 @@ export default function CertificateCard({
           )}
         </p>
 
-        <div className="mt-auto flex items-center justify-between border-t border-ink/10 pt-3 text-xs text-slate">
-          <span>Expires {formatDate(certificate.expiryDate)}</span>
-          <span>Alert {certificate.alertDaysBefore}d before</span>
+        <div className="mt-4">
+          <div className="flex items-center justify-between text-xs">
+            <span className="text-slate-light">{formatDate(certificate.expiryDate)}</span>
+            <span
+              className={`font-medium ${
+                status.tone === "rust"
+                  ? "text-rust"
+                  : status.tone === "amber"
+                  ? "text-amber-dark"
+                  : "text-forest-dark"
+              }`}
+            >
+              {status.label}
+            </span>
+          </div>
+          <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-ink/[0.06]">
+            <div
+              className={`h-full rounded-full ${toneBar[status.tone]}`}
+              style={{ width: `${status.tone === "rust" ? 100 : progressPct}%` }}
+            />
+          </div>
         </div>
+      </button>
 
-        <div className="mt-4 flex gap-2 opacity-0 transition group-hover:opacity-100">
+      <div className="flex gap-2 border-t border-ink/10 px-5 py-3 opacity-0 transition group-hover:opacity-100">
+        <button
+          onClick={() => onEdit(certificate)}
+          className="flex flex-1 items-center justify-center gap-1.5 rounded-xl border border-ink/15 py-2 text-xs font-medium text-ink transition hover:border-ink/40 active:scale-95"
+        >
+          <Pencil size={13} />
+          Edit
+        </button>
+        {onArchive && (
           <button
-            onClick={() => onEdit(certificate)}
-            className="flex flex-1 items-center justify-center gap-1.5 rounded-sm border border-ink/15 py-2 text-xs font-medium text-ink transition hover:border-ink/40 active:scale-95"
+            onClick={() => onArchive(certificate)}
+            aria-label={certificate.archived ? "Restore certificate" : "Archive certificate"}
+            className="flex items-center justify-center rounded-xl border border-ink/15 px-3 text-ink transition hover:border-ink/40 active:scale-95"
           >
-            <Pencil size={13} />
-            Edit
+            {certificate.archived ? (
+              <ArchiveRestore size={14} />
+            ) : (
+              <Archive size={14} />
+            )}
           </button>
-          <button
-            onClick={() => onDelete(certificate)}
-            className="flex flex-1 items-center justify-center gap-1.5 rounded-sm border border-rust/25 py-2 text-xs font-medium text-rust transition hover:bg-rust-light active:scale-95"
-          >
-            <Trash2 size={13} />
-            Delete
-          </button>
-        </div>
+        )}
+        <button
+          onClick={() => onDelete(certificate)}
+          className="flex items-center justify-center rounded-xl border border-rust/25 px-3 text-rust transition hover:bg-rust-light active:scale-95"
+        >
+          <Trash2 size={14} />
+        </button>
       </div>
     </motion.div>
   );

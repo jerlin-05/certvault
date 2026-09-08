@@ -7,47 +7,66 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        // Core neutrals
         ink: {
-          DEFAULT: "#121B2E",
-          light: "#1B2740",
-          soft: "#28324A",
+          DEFAULT: "#0E1526",   // Midnight — primary dark surface
+          light: "#141D34",     // Navy — secondary dark surface
+          soft: "#1E293F",      // raised dark surface (cards on dark bg)
+          border: "rgba(250,249,246,0.10)",
         },
         paper: {
-          DEFAULT: "#FBFAF7",
-          dim: "#F2EFE8",
+          DEFAULT: "#FAF9F6",   // Ivory
+          dim: "#F1EEE7",
+          card: "#FFFFFF",
         },
         slate: {
           DEFAULT: "#5B6472",
           light: "#8A93A0",
         },
+        // Brand gold
         gold: {
-          DEFAULT: "#B8863B",
-          light: "#D2A55E",
-          dark: "#8E661F",
+          DEFAULT: "#C9A15A",
+          light: "#DEBD84",
+          dark: "#A67F3D",
+          soft: "#F6EDDC",
         },
+        // Status system (matches reference palette)
         forest: {
-          DEFAULT: "#2F6844",
-          light: "#E4EEE7",
+          DEFAULT: "#0FA968",
+          light: "#E3F6ED",
+          dark: "#0B7C4D",
         },
         amber: {
-          DEFAULT: "#C97A2B",
-          light: "#F6E9D9",
+          DEFAULT: "#F2A70B",
+          light: "#FDF0D8",
+          dark: "#B87A05",
         },
         rust: {
-          DEFAULT: "#A1352B",
-          light: "#F5E1DF",
+          DEFAULT: "#E74444",
+          light: "#FCE6E6",
+          dark: "#B92E2E",
         },
       },
       fontFamily: {
         display: ["var(--font-fraunces)", "Georgia", "serif"],
         sans: ["var(--font-inter)", "system-ui", "sans-serif"],
       },
+      borderRadius: {
+        sm: "10px",
+        DEFAULT: "12px",
+        md: "14px",
+        lg: "18px",
+        xl: "22px",
+        "2xl": "28px",
+      },
       boxShadow: {
-        card: "0 1px 2px rgba(18, 27, 46, 0.06), 0 8px 24px -12px rgba(18, 27, 46, 0.18)",
-        panel: "0 1px 3px rgba(18, 27, 46, 0.08)",
+        card: "0 1px 2px rgba(14, 21, 38, 0.04), 0 12px 32px -14px rgba(14, 21, 38, 0.16)",
+        panel: "0 1px 3px rgba(14, 21, 38, 0.06)",
+        glow: "0 0 0 1px rgba(201,161,90,0.15), 0 20px 50px -20px rgba(201,161,90,0.35)",
+        dark: "0 20px 60px -20px rgba(0,0,0,0.5)",
       },
       backgroundImage: {
-        seal: "radial-gradient(circle at 30% 30%, #D2A55E 0%, #B8863B 55%, #8E661F 100%)",
+        seal: "radial-gradient(circle at 30% 30%, #E4C381 0%, #C9A15A 55%, #A67F3D 100%)",
       },
     },
   },

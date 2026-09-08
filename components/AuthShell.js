@@ -33,13 +33,13 @@ export default function AuthShell({ children }) {
           className="pointer-events-none absolute inset-0 opacity-[0.05]"
           style={{
             backgroundImage:
-              "radial-gradient(#FBFAF7 1px, transparent 1px)",
+              "radial-gradient(#FAF9F6 1px, transparent 1px)",
             backgroundSize: "20px 20px",
           }}
         />
         <div
           aria-hidden
-          className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-seal opacity-[0.12] blur-3xl"
+          className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-seal opacity-[0.14] blur-3xl"
         />
 
         <Link href="/" className="relative flex items-center gap-2.5">
@@ -50,19 +50,24 @@ export default function AuthShell({ children }) {
         </Link>
 
         <div className="relative max-w-md">
-          <p className="font-display text-[1.7rem] italic leading-snug text-paper/90">
-            "The certificate that expires quietly is the one that costs you
-            the most."
+          <h2 className="font-display text-3xl leading-tight text-paper">
+            Certificates expire.
+            <br />
+            <span className="text-gold-light">Your memory shouldn't.</span>
+          </h2>
+          <p className="mt-3 text-sm leading-relaxed text-paper/50">
+            A smarter way to manage your professional and business
+            certifications.
           </p>
           <div className="mt-10 space-y-7">
             {PANEL_POINTS.map((p) => (
               <div key={p.title} className="flex gap-4">
-                <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-gold/30 bg-gold/10 text-gold-light">
+                <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-gold/25 bg-gold/10 text-gold-light">
                   <p.icon size={17} strokeWidth={1.75} />
                 </span>
                 <div>
                   <p className="text-sm font-medium text-paper">{p.title}</p>
-                  <p className="mt-1 text-sm leading-relaxed text-paper/55">
+                  <p className="mt-1 text-sm leading-relaxed text-paper/50">
                     {p.body}
                   </p>
                 </div>
@@ -71,9 +76,9 @@ export default function AuthShell({ children }) {
           </div>
         </div>
 
-        <p className="relative text-xs text-paper/35">
-          © {new Date().getFullYear()} CertVault — built for people who'd
-          rather not find out at the border.
+        <p className="relative text-xs text-paper/30">
+          "CertVault has saved me from missing critical renewals — a
+          must-have." — Sarah K., IT Professional
         </p>
       </section>
 

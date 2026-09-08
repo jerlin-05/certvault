@@ -50,7 +50,7 @@ export default function ForgotPasswordPage() {
       </p>
 
       {sent ? (
-        <div className="mt-8 flex items-start gap-3 rounded-sm bg-forest-light px-4 py-4 text-sm text-forest">
+        <div className="mt-8 flex items-start gap-3 rounded-xl bg-forest-light px-4 py-4 text-sm text-forest">
           <MailCheck size={18} className="mt-0.5 shrink-0" />
           <p>{message}</p>
         </div>
@@ -66,7 +66,7 @@ export default function ForgotPasswordPage() {
           />
 
           {error && (
-            <p className="rounded-sm bg-rust-light px-3 py-2 text-sm text-rust">
+            <p className="rounded-xl bg-rust-light px-3 py-2 text-sm text-rust">
               {error}
             </p>
           )}
@@ -74,7 +74,7 @@ export default function ForgotPasswordPage() {
           <button
             type="submit"
             disabled={loading}
-            className="group flex w-full items-center justify-center gap-2 rounded-sm bg-ink px-4 py-3 text-sm font-medium text-paper transition hover:bg-ink-light disabled:opacity-60"
+            className="group flex w-full items-center justify-center gap-2 rounded-xl bg-gold px-4 py-3 text-sm font-semibold text-ink transition hover:bg-gold-light disabled:opacity-60"
           >
             {loading ? "Sending…" : "Send reset link"}
             {!loading && (

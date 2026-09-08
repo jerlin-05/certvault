@@ -11,14 +11,14 @@ export default function GradientMesh({ variant = "light" }) {
 
   const blobs = isDark
     ? [
-        { color: "#B8863B", size: 520, top: "-12%", left: "-8%", delay: 0 },
-        { color: "#2F6844", size: 420, top: "55%", left: "60%", delay: 2 },
-        { color: "#8E661F", size: 380, top: "10%", left: "70%", delay: 4 },
+        { color: "#C9A15A", size: 520, top: "-12%", left: "-8%", delay: 0 },
+        { color: "#0FA968", size: 420, top: "55%", left: "62%", delay: 2 },
+        { color: "#A67F3D", size: 380, top: "8%", left: "72%", delay: 4 },
       ]
     : [
-        { color: "#D2A55E", size: 480, top: "-10%", left: "5%", delay: 0 },
-        { color: "#B8863B", size: 380, top: "40%", left: "75%", delay: 1.6 },
-        { color: "#121B2E", size: 340, top: "70%", left: "10%", delay: 3.2 },
+        { color: "#DEBD84", size: 480, top: "-10%", left: "5%", delay: 0 },
+        { color: "#C9A15A", size: 380, top: "40%", left: "75%", delay: 1.6 },
+        { color: "#0E1526", size: 340, top: "70%", left: "10%", delay: 3.2 },
       ];
 
   return (
@@ -36,7 +36,7 @@ export default function GradientMesh({ variant = "light" }) {
             top: b.top,
             left: b.left,
             background: b.color,
-            opacity: isDark ? 0.14 : 0.08,
+            opacity: isDark ? 0.16 : 0.08,
             filter: "blur(90px)",
           }}
           animate={{

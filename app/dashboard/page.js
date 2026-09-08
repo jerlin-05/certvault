@@ -3,8 +3,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
-import { Search } from "lucide-react";
-import Navbar from "@/components/Navbar";
+import { Search, Plus, Bell } from "lucide-react";
+import Sidebar from "@/components/Sidebar";
 import StatBar from "@/components/StatBar";
 import CertificateCard from "@/components/CertificateCard";
 import CertificateModal from "@/components/CertificateModal";
@@ -18,6 +18,7 @@ const STATUS_FILTERS = [
   { value: "amber", label: "Expiring soon" },
   { value: "rust", label: "Expired" },
   { value: "forest", label: "In good standing" },
+  { value: "archived", label: "Archived" },
 ];
 
 const gridVariants = {
@@ -72,12 +73,43 @@ export default function DashboardPage() {
         !search ||
         c.name.toLowerCase().includes(search.toLowerCase()) ||
         c.issuer?.toLowerCase().includes(search.toLowerCase());
+
+      if (statusFilter === "archived") {
+        return matchesSearch && c.archived;
+      }
+      if (c.archived) return false;
+
       const matchesStatus =
         statusFilter === "all" ||
         getCertificateStatus(c).tone === statusFilter;
       return matchesSearch && matchesStatus;
     });
   }, [certificates, search, statusFilter]);
+
+  const attentionItems = useMemo(
+    () =>
+      certificates
+        .filter((c) => !c.archived && getCertificateStatus(c).tone !== "forest")
+        .slice(0, 3),
+    [certificates]
+  );
+
+  async function handleArchiveToggle(certificate) {
+    const res = await fetch(`/api/certificates/${certificate._id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ archived: !certificate.archived }),
+    });
+    const data = await res.json();
+    if (data.certificate) {
+      setCertificates((prev) =>
+        prev.map((c) => (c._id === certificate._id ? data.certificate : c))
+      );
+      setViewTarget((prev) =>
+        prev?._id === certificate._id ? data.certificate : prev
+      );
+    }
+  }
 
   function handleSaved(certificate) {
     setCertificates((prev) => {
@@ -112,24 +144,19 @@ export default function DashboardPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-paper">
-        <div className="border-b border-ink/10 bg-ink py-4">
-          <div className="container-page h-8" />
-        </div>
+      <div className="min-h-screen bg-paper lg:pl-64">
+        <div className="fixed inset-y-0 left-0 hidden w-64 bg-ink lg:block" />
         <main className="container-page py-10">
-          <div className="skeleton h-4 w-56 rounded-sm" />
-          <div className="skeleton mt-3 h-3 w-72 rounded-sm" />
-          <div className="mt-8 grid grid-cols-2 gap-px overflow-hidden rounded-sm border border-ink/10 bg-ink/10 sm:grid-cols-4">
+          <div className="skeleton h-4 w-56 rounded-xl" />
+          <div className="skeleton mt-3 h-3 w-72 rounded-xl" />
+          <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
             {[0, 1, 2, 3].map((i) => (
-              <div key={i} className="skeleton h-20 bg-paper" />
+              <div key={i} className="skeleton h-24 rounded-2xl" />
             ))}
           </div>
           <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {[0, 1, 2].map((i) => (
-              <div
-                key={i}
-                className="skeleton h-72 rounded-sm border border-ink/10"
-              />
+              <div key={i} className="skeleton h-64 rounded-2xl" />
             ))}
           </div>
         </main>
@@ -138,10 +165,54 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-paper">
-      <Navbar user={user} onAddClick={() => setModalState({})} />
+    <div className="min-h-screen bg-paper lg:pl-64">
+      <Sidebar
+        user={user}
+        statusFilter={statusFilter}
+        onFilter={(v) => setStatusFilter(v || "all")}
+      />
 
-      <main className="container-page py-10">
+      {/* Top bar */}
+      <header className="sticky top-0 z-20 border-b border-ink/10 bg-paper/90 backdrop-blur">
+        <div className="flex items-center justify-between gap-4 px-6 py-4">
+          <div className="relative w-full max-w-xs">
+            <Search
+              size={15}
+              className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-light"
+            />
+            <input
+              type="text"
+              placeholder="Search certificates…"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="w-full rounded-xl border border-ink/15 bg-paper-card py-2.5 pl-9 pr-3 text-sm text-ink outline-none transition focus:border-gold focus:ring-1 focus:ring-gold/25"
+            />
+          </div>
+          <div className="flex items-center gap-3">
+            <button
+              aria-label="Notifications"
+              className="relative flex h-9 w-9 items-center justify-center rounded-xl border border-ink/10 text-slate transition hover:border-ink/25 hover:text-ink"
+            >
+              <Bell size={16} />
+              {attentionItems.length > 0 && (
+                <span className="absolute right-2 top-2 h-1.5 w-1.5 rounded-full bg-rust" />
+              )}
+            </button>
+            <button
+              onClick={() => setModalState({})}
+              className="flex items-center gap-1.5 rounded-xl bg-gold px-4 py-2.5 text-sm font-semibold text-ink shadow-glow transition hover:bg-gold-light active:scale-95"
+            >
+              <Plus size={15} strokeWidth={2.25} />
+              Add certificate
+            </button>
+            <span className="hidden h-9 w-9 items-center justify-center rounded-full bg-ink/[0.06] text-xs font-medium text-ink sm:flex">
+              {user?.name?.[0]?.toUpperCase() || "U"}
+            </span>
+          </div>
+        </div>
+      </header>
+
+      <main className="container-page py-8">
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -149,12 +220,12 @@ export default function DashboardPage() {
           className="mb-8"
         >
           <h1 className="font-display text-2xl text-ink">
-            Good to see you, {user?.name?.split(" ")[0]}
+            Good to see you, {user?.name?.split(" ")[0]} 👋
           </h1>
           <p className="mt-1 text-sm text-slate">
             {certificates.length === 0
               ? "Add your first certificate to get started."
-              : "Here's the current state of your vault."}
+              : "Here's what needs your attention today."}
           </p>
         </motion.div>
 
@@ -165,28 +236,55 @@ export default function DashboardPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.06 }}
             >
-              <StatBar certificates={certificates} />
+              <StatBar certificates={certificates.filter((c) => !c.archived)} />
             </motion.div>
+
+            {attentionItems.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.1 }}
+                className="mt-6 rounded-2xl border border-amber/25 bg-amber-light/60 p-5"
+              >
+                <p className="text-sm font-medium text-amber-dark">
+                  {attentionItems.length} certificate
+                  {attentionItems.length === 1 ? "" : "s"} require attention
+                </p>
+                <div className="mt-3 space-y-2">
+                  {attentionItems.map((c) => {
+                    const status = getCertificateStatus(c);
+                    return (
+                      <button
+                        key={c._id}
+                        onClick={() => setViewTarget(c)}
+                        className="flex w-full items-center justify-between rounded-xl bg-paper-card px-4 py-2.5 text-left text-sm shadow-panel transition hover:-translate-y-0.5"
+                      >
+                        <span className="text-ink">{c.name}</span>
+                        <span
+                          className={
+                            status.tone === "rust"
+                              ? "text-rust"
+                              : "text-amber-dark"
+                          }
+                        >
+                          {status.label} →
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </motion.div>
+            )}
 
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.12 }}
+              transition={{ duration: 0.4, delay: 0.14 }}
               className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
             >
-              <div className="relative w-full max-w-xs sm:w-64">
-                <Search
-                  size={15}
-                  className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-light"
-                />
-                <input
-                  type="text"
-                  placeholder="Search by name or issuer…"
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  className="w-full rounded-sm border border-ink/15 bg-paper py-2 pl-9 pr-3 text-sm text-ink outline-none transition focus:border-gold focus:ring-1 focus:ring-gold/25"
-                />
-              </div>
+              <h2 className="font-display text-lg text-ink">
+                {statusFilter === "archived" ? "Archived certificates" : "Your certificates"}
+              </h2>
               <LayoutGroup id="status-filter">
                 <div className="flex flex-wrap gap-2">
                   {STATUS_FILTERS.map((f) => {
@@ -195,16 +293,16 @@ export default function DashboardPage() {
                       <button
                         key={f.value}
                         onClick={() => setStatusFilter(f.value)}
-                        className={`relative rounded-full px-3 py-1.5 text-xs font-medium transition-colors active:scale-95 ${
+                        className={`relative rounded-full px-3.5 py-1.5 text-xs font-medium transition-colors active:scale-95 ${
                           active
-                            ? "text-paper"
+                            ? "text-ink"
                             : "border border-ink/15 text-slate hover:border-ink/40 hover:text-ink"
                         }`}
                       >
                         {active && (
                           <motion.span
                             layoutId="active-filter-pill"
-                            className="absolute inset-0 rounded-full bg-ink"
+                            className="absolute inset-0 rounded-full bg-gold"
                             transition={{
                               type: "spring",
                               stiffness: 400,
@@ -260,6 +358,7 @@ export default function DashboardPage() {
                       onView={setViewTarget}
                       onEdit={setModalState}
                       onDelete={setDeleteTarget}
+                      onArchive={handleArchiveToggle}
                     />
                   </motion.div>
                 ))}
@@ -277,6 +376,7 @@ export default function DashboardPage() {
             onClose={() => setViewTarget(null)}
             onEdit={openEditFromView}
             onDelete={openDeleteFromView}
+            onArchive={handleArchiveToggle}
           />
         )}
       </AnimatePresence>

@@ -76,7 +76,7 @@ export default function LoginPage() {
         </div>
 
         {error && (
-          <p className="rounded-sm bg-rust-light px-3 py-2 text-sm text-rust">
+          <p className="rounded-xl bg-rust-light px-3 py-2 text-sm text-rust">
             {error}
           </p>
         )}
@@ -84,7 +84,7 @@ export default function LoginPage() {
         <button
           type="submit"
           disabled={loading}
-          className="group flex w-full items-center justify-center gap-2 rounded-sm bg-ink px-4 py-3 text-sm font-medium text-paper transition hover:bg-ink-light disabled:opacity-60"
+          className="group flex w-full items-center justify-center gap-2 rounded-xl bg-gold px-4 py-3 text-sm font-semibold text-ink transition hover:bg-gold-light disabled:opacity-60"
         >
           {loading ? "Signing in…" : "Sign in"}
           {!loading && (

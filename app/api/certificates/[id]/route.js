@@ -45,8 +45,10 @@ export async function PUT(request, { params }) {
       expiryDate,
       alertDaysBefore,
       image,
+      archived,
     } = body;
 
+    if (archived !== undefined) certificate.archived = archived;
     if (name !== undefined) certificate.name = name;
     if (issuer !== undefined) certificate.issuer = issuer;
     if (category !== undefined) certificate.category = category;
