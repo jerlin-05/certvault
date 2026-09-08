@@ -14,8 +14,9 @@ export default function PasswordField({
 
   return (
     <label className="block">
-      <span className="mb-1.5 block text-xs font-medium text-slate">
+      <span className="mb-1.5 block text-xs font-medium tracking-wide text-slate">
         {label}
+        {required && <span className="ml-0.5 text-gold-dark">*</span>}
       </span>
       <div className="relative">
         <input
@@ -24,14 +25,14 @@ export default function PasswordField({
           autoComplete={autoComplete}
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="w-full rounded-sm border border-ink/15 bg-paper px-3 py-2.5 pr-11 text-sm text-ink outline-none transition focus:border-gold"
+          className="w-full rounded-sm border border-ink/15 bg-paper px-3.5 py-2.5 pr-11 text-sm text-ink outline-none transition focus:border-gold focus:ring-1 focus:ring-gold/25"
         />
         <button
           type="button"
           onClick={() => setVisible((v) => !v)}
           aria-label={visible ? "Hide password" : "Show password"}
           tabIndex={-1}
-          className="absolute right-0 top-0 flex h-full w-10 items-center justify-center text-slate transition hover:text-ink"
+          className="absolute right-0 top-0 flex h-full w-10 items-center justify-center text-slate-light transition hover:text-ink"
         >
           {visible ? <EyeOffIcon /> : <EyeIcon />}
         </button>

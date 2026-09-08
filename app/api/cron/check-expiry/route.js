@@ -30,17 +30,28 @@ async function runCheck() {
 
     const daysRemaining = daysBetween(today, cert.expiryDate);
 
-    // Fire once the certificate enters the alert window, and again if it
-    // becomes overdue (tracked separately so both messages can go out).
-    const shouldAlertUpcoming =
-      daysRemaining <= cert.alertDaysBefore &&
-      daysRemaining >= 0 &&
+    // Exactly on the chosen alert day (e.g. alertDaysBefore = 3 -> only when
+    // there are precisely 3 days left, not every day inside the window).
+    const shouldAlertOnAlertDay =
+      daysRemaining === cert.alertDaysBefore &&
       !cert.alertsSent.includes(cert.alertDaysBefore);
 
-    const shouldAlertExpired =
+    // On the expiry date itself. Uses the same marker as the alert-day check
+    // above so if alertDaysBefore is 0 they collapse into a single email
+    // instead of sending twice.
+    const shouldAlertOnExpiryDay =
+      daysRemaining === 0 && !cert.alertsSent.includes(0);
+
+    // Once, after the certificate has actually lapsed.
+    const shouldAlertAfterExpiry =
       daysRemaining < 0 && !cert.alertsSent.includes(-1);
 
-    if (!shouldAlertUpcoming && !shouldAlertExpired) continue;
+    if (
+      !shouldAlertOnAlertDay &&
+      !shouldAlertOnExpiryDay &&
+      !shouldAlertAfterExpiry
+    )
+      continue;
 
     try {
       await sendExpiryAlertEmail({
@@ -52,8 +63,9 @@ async function runCheck() {
         daysRemaining,
       });
 
-      if (shouldAlertUpcoming) cert.alertsSent.push(cert.alertDaysBefore);
-      if (shouldAlertExpired) cert.alertsSent.push(-1);
+      if (shouldAlertOnAlertDay) cert.alertsSent.push(cert.alertDaysBefore);
+      if (shouldAlertOnExpiryDay) cert.alertsSent.push(0);
+      if (shouldAlertAfterExpiry) cert.alertsSent.push(-1);
       await cert.save();
       emailsSent += 1;
     } catch (err) {

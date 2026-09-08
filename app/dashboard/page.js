@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
+import { Search } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import StatBar from "@/components/StatBar";
 import CertificateCard from "@/components/CertificateCard";
@@ -104,13 +105,19 @@ export default function DashboardPage() {
             <StatBar certificates={certificates} />
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <input
-                type="text"
-                placeholder="Search by name or issuer…"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="w-full max-w-xs rounded-sm border border-ink/15 bg-paper px-3 py-2 text-sm text-ink outline-none focus:border-gold sm:w-64"
-              />
+              <div className="relative w-full max-w-xs sm:w-64">
+                <Search
+                  size={15}
+                  className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-light"
+                />
+                <input
+                  type="text"
+                  placeholder="Search by name or issuer…"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  className="w-full rounded-sm border border-ink/15 bg-paper py-2 pl-9 pr-3 text-sm text-ink outline-none transition focus:border-gold focus:ring-1 focus:ring-gold/25"
+                />
+              </div>
               <div className="flex flex-wrap gap-2">
                 {STATUS_FILTERS.map((f) => (
                   <button

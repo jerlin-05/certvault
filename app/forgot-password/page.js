@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { MailCheck, ArrowRight } from "lucide-react";
+import AuthShell from "@/components/AuthShell";
+import FormField from "@/components/FormField";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
@@ -35,64 +38,63 @@ export default function ForgotPasswordPage() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-paper px-6">
-      <div className="w-full max-w-sm">
-        <Link
-          href="/"
-          className="mb-10 flex items-center gap-2 text-sm text-slate"
-        >
-          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-seal text-[10px] font-semibold text-ink">
-            CV
-          </span>
-          CertVault
-        </Link>
+    <AuthShell>
+      <p className="mb-2 text-xs font-medium tracking-wide text-gold-dark">
+        Account recovery
+      </p>
+      <h1 className="font-display text-[1.85rem] leading-tight text-ink">
+        Reset your password
+      </h1>
+      <p className="mt-2 text-sm text-slate">
+        Enter the email on your account and we'll send you a reset link.
+      </p>
 
-        <h1 className="font-display text-2xl text-ink">Reset your password</h1>
-        <p className="mt-2 text-sm text-slate">
-          Enter the email on your account and we'll send you a reset link.
-        </p>
+      {sent ? (
+        <div className="mt-8 flex items-start gap-3 rounded-sm bg-forest-light px-4 py-4 text-sm text-forest">
+          <MailCheck size={18} className="mt-0.5 shrink-0" />
+          <p>{message}</p>
+        </div>
+      ) : (
+        <form onSubmit={handleSubmit} className="mt-8 space-y-4">
+          <FormField
+            label="Email"
+            type="email"
+            value={email}
+            onChange={setEmail}
+            required
+            autoComplete="email"
+          />
 
-        {sent ? (
-          <p className="mt-8 rounded-sm bg-forest-light px-4 py-3 text-sm text-forest">
-            {message}
-          </p>
-        ) : (
-          <form onSubmit={handleSubmit} className="mt-8 space-y-4">
-            <label className="block">
-              <span className="mb-1.5 block text-xs font-medium text-slate">
-                Email
-              </span>
-              <input
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full rounded-sm border border-ink/15 bg-paper px-3 py-2.5 text-sm text-ink outline-none transition focus:border-gold"
+          {error && (
+            <p className="rounded-sm bg-rust-light px-3 py-2 text-sm text-rust">
+              {error}
+            </p>
+          )}
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="group flex w-full items-center justify-center gap-2 rounded-sm bg-ink px-4 py-3 text-sm font-medium text-paper transition hover:bg-ink-light disabled:opacity-60"
+          >
+            {loading ? "Sending…" : "Send reset link"}
+            {!loading && (
+              <ArrowRight
+                size={15}
+                className="transition group-hover:translate-x-0.5"
               />
-            </label>
-
-            {error && (
-              <p className="rounded-sm bg-rust-light px-3 py-2 text-sm text-rust">
-                {error}
-              </p>
             )}
+          </button>
+        </form>
+      )}
 
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full rounded-sm bg-ink px-4 py-3 text-sm font-medium text-paper transition hover:bg-ink-light disabled:opacity-60"
-            >
-              {loading ? "Sending…" : "Send reset link"}
-            </button>
-          </form>
-        )}
-
-        <p className="mt-6 text-sm text-slate">
-          <Link href="/login" className="text-gold-dark underline">
-            Back to sign in
-          </Link>
-        </p>
-      </div>
-    </main>
+      <p className="mt-7 text-sm text-slate">
+        <Link
+          href="/login"
+          className="text-gold-dark underline underline-offset-2 hover:text-gold"
+        >
+          Back to sign in
+        </Link>
+      </p>
+    </AuthShell>
   );
 }

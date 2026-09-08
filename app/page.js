@@ -1,15 +1,19 @@
 import Link from "next/link";
+import { FolderLock, BellRing, MailCheck } from "lucide-react";
 
 const features = [
   {
+    icon: FolderLock,
     title: "Every credential, one shelf",
     body: "Upload a photo or scan of each certificate alongside its name, issuer and dates. Search and filter the whole collection in seconds.",
   },
   {
+    icon: BellRing,
     title: "You choose the warning window",
     body: "Set how many days before expiry each certificate should raise a flag — 90 days for a passport, 7 for a food-hygiene badge.",
   },
   {
+    icon: MailCheck,
     title: "Alerts land in your inbox",
     body: "A daily check runs quietly in the background and emails you the moment a certificate enters its warning window, and again if it lapses.",
   },
@@ -82,7 +86,9 @@ export default function LandingPage() {
         <div className="container-page grid gap-12 py-20 sm:grid-cols-3">
           {features.map((f) => (
             <div key={f.title}>
-              <div className="mb-4 h-px w-10 bg-gold" />
+              <span className="mb-4 flex h-10 w-10 items-center justify-center rounded-full border border-gold/30 bg-gold/10 text-gold-dark">
+                <f.icon size={17} strokeWidth={1.75} />
+              </span>
               <h3 className="font-display text-lg text-ink">{f.title}</h3>
               <p className="mt-3 text-[15px] leading-relaxed text-slate">
                 {f.body}

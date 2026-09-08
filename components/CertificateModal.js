@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
+import { X, ImagePlus } from "lucide-react";
 
 const CATEGORIES = [
   "General",
@@ -98,7 +99,7 @@ export default function CertificateModal({ initial, onClose, onSaved }) {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-ink/40 px-4 py-8">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-ink/50 px-4 py-8 backdrop-blur-sm">
       <div className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-sm border border-ink/10 bg-paper shadow-card">
         <div className="flex items-center justify-between border-b border-ink/10 px-6 py-4">
           <h2 className="font-display text-lg text-ink">
@@ -106,10 +107,10 @@ export default function CertificateModal({ initial, onClose, onSaved }) {
           </h2>
           <button
             onClick={onClose}
-            className="text-slate transition hover:text-ink"
+            className="flex h-8 w-8 items-center justify-center rounded-full text-slate transition hover:bg-ink/5 hover:text-ink"
             aria-label="Close"
           >
-            ✕
+            <X size={17} />
           </button>
         </div>
 
@@ -127,7 +128,8 @@ export default function CertificateModal({ initial, onClose, onSaved }) {
                 className="h-full w-full object-cover"
               />
             ) : (
-              <span className="text-sm text-slate">
+              <span className="flex flex-col items-center gap-1.5 text-sm text-slate">
+                <ImagePlus size={20} strokeWidth={1.6} />
                 Click to upload a photo or scan
               </span>
             )}
