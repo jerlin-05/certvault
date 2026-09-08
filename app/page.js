@@ -48,7 +48,7 @@ export default function LandingPage() {
       </header>
 
       <section className="container-page grid gap-16 py-20 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:py-28">
-        <div>
+        <div className="animate-fade-in-up">
           <p className="mb-5 font-sans text-sm text-gold-dark">
             Certificate &amp; license tracking
           </p>
@@ -63,13 +63,13 @@ export default function LandingPage() {
           <div className="mt-9 flex flex-wrap items-center gap-4">
             <Link
               href="/register"
-              className="rounded-sm bg-ink px-6 py-3 text-sm font-medium text-paper transition hover:bg-ink-light"
+              className="rounded-sm bg-ink px-6 py-3 text-sm font-medium text-paper transition hover:bg-ink-light active:scale-95"
             >
               Start your vault
             </Link>
             <Link
               href="/login"
-              className="rounded-sm border border-ink/15 px-6 py-3 text-sm font-medium text-ink transition hover:border-ink/40"
+              className="rounded-sm border border-ink/15 px-6 py-3 text-sm font-medium text-ink transition hover:border-ink/40 active:scale-95"
             >
               I already have an account
             </Link>
@@ -84,8 +84,12 @@ export default function LandingPage() {
 
       <section className="border-y border-ink/10 bg-ink-light/[0.02]">
         <div className="container-page grid gap-12 py-20 sm:grid-cols-3">
-          {features.map((f) => (
-            <div key={f.title}>
+          {features.map((f, i) => (
+            <div
+              key={f.title}
+              className="animate-fade-in-up"
+              style={{ animationDelay: `${i * 90}ms` }}
+            >
               <span className="mb-4 flex h-10 w-10 items-center justify-center rounded-full border border-gold/30 bg-gold/10 text-gold-dark">
                 <f.icon size={17} strokeWidth={1.75} />
               </span>
@@ -119,6 +123,7 @@ function HeroStack() {
     <div className="relative mx-auto h-[360px] w-full max-w-sm">
       <MockCard
         className="absolute left-4 top-10 -rotate-6"
+        style={{ animationDelay: "0s", animationDuration: "6.5s" }}
         title="AWS Solutions Architect"
         issuer="Amazon Web Services"
         date="Expires 14 Mar 2027"
@@ -126,6 +131,7 @@ function HeroStack() {
       />
       <MockCard
         className="absolute right-2 top-0 rotate-3"
+        style={{ animationDelay: "1.2s", animationDuration: "7.5s" }}
         title="Food Hygiene Level 2"
         issuer="City Council"
         date="Expires 2 Oct 2026"
@@ -133,6 +139,7 @@ function HeroStack() {
       />
       <MockCard
         className="absolute bottom-2 left-10 -rotate-2"
+        style={{ animationDelay: "2.1s", animationDuration: "6.9s" }}
         title="Fire Safety Certificate"
         issuer="National Safety Board"
         date="Expired 19 Jun 2026"
@@ -142,7 +149,7 @@ function HeroStack() {
   );
 }
 
-function MockCard({ className, title, issuer, date, tone }) {
+function MockCard({ className, style, title, issuer, date, tone }) {
   const toneMap = {
     forest: "bg-forest-light text-forest",
     amber: "bg-amber-light text-amber",
@@ -150,7 +157,8 @@ function MockCard({ className, title, issuer, date, tone }) {
   };
   return (
     <div
-      className={`w-64 rounded-sm border border-ink/10 bg-paper p-5 shadow-card ${className}`}
+      style={style}
+      className={`animate-float w-64 rounded-sm border border-ink/10 bg-paper p-5 shadow-card transition-shadow duration-300 hover:shadow-xl ${className}`}
     >
       <div className="mb-3 flex items-center justify-between">
         <span className="h-2 w-2 rounded-full bg-gold" />

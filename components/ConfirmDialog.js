@@ -2,8 +2,8 @@ import { TriangleAlert } from "lucide-react";
 
 export default function ConfirmDialog({ title, body, onConfirm, onCancel }) {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-ink/50 px-4 backdrop-blur-sm">
-      <div className="w-full max-w-sm rounded-sm border border-ink/10 bg-paper p-6 shadow-card">
+    <div className="animate-overlay-in fixed inset-0 z-50 flex items-center justify-center bg-ink/50 px-4 backdrop-blur-sm">
+      <div className="animate-scale-in w-full max-w-sm rounded-sm border border-ink/10 bg-paper p-6 shadow-card">
         <span className="flex h-10 w-10 items-center justify-center rounded-full bg-rust-light text-rust">
           <TriangleAlert size={18} strokeWidth={1.9} />
         </span>

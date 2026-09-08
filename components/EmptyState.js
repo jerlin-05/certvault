@@ -3,7 +3,7 @@ import { FolderPlus } from "lucide-react";
 export default function EmptyState({ onAddClick }) {
   return (
     <div className="paper-texture flex flex-col items-center justify-center rounded-sm border border-dashed border-ink/15 py-24 text-center">
-      <span className="flex h-14 w-14 items-center justify-center rounded-full bg-seal text-ink shadow-[0_2px_6px_rgba(18,27,46,0.25)]">
+      <span className="animate-float flex h-14 w-14 items-center justify-center rounded-full bg-seal text-ink shadow-[0_2px_6px_rgba(18,27,46,0.25)]">
         <FolderPlus size={22} strokeWidth={1.75} />
       </span>
       <h3 className="mt-5 font-display text-xl text-ink">

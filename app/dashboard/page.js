@@ -7,6 +7,7 @@ import Navbar from "@/components/Navbar";
 import StatBar from "@/components/StatBar";
 import CertificateCard from "@/components/CertificateCard";
 import CertificateModal from "@/components/CertificateModal";
+import CertificateViewModal from "@/components/CertificateViewModal";
 import ConfirmDialog from "@/components/ConfirmDialog";
 import EmptyState from "@/components/EmptyState";
 import { getCertificateStatus } from "@/lib/status";
@@ -26,6 +27,7 @@ export default function DashboardPage() {
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [modalState, setModalState] = useState(null); // null | {} | certificate
+  const [viewTarget, setViewTarget] = useState(null);
   const [deleteTarget, setDeleteTarget] = useState(null);
 
   useEffect(() => {
@@ -65,6 +67,10 @@ export default function DashboardPage() {
         ? prev.map((c) => (c._id === certificate._id ? certificate : c))
         : [...prev, certificate];
     });
+    // Keep the viewer in sync if we just edited the certificate being viewed.
+    setViewTarget((prev) =>
+      prev && prev._id === certificate._id ? certificate : prev
+    );
     setModalState(null);
   }
 
@@ -73,13 +79,42 @@ export default function DashboardPage() {
       method: "DELETE",
     });
     setCertificates((prev) => prev.filter((c) => c._id !== deleteTarget._id));
+    setViewTarget((prev) => (prev?._id === deleteTarget._id ? null : prev));
     setDeleteTarget(null);
+  }
+
+  function openEditFromView(certificate) {
+    setViewTarget(null);
+    setModalState(certificate);
+  }
+
+  function openDeleteFromView(certificate) {
+    setDeleteTarget(certificate);
   }
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-paper">
-        <p className="text-sm text-slate">Loading your vault…</p>
+      <div className="min-h-screen bg-paper">
+        <div className="border-b border-ink/10 bg-ink py-4">
+          <div className="container-page h-8" />
+        </div>
+        <main className="container-page py-10">
+          <div className="skeleton h-4 w-56 rounded-sm" />
+          <div className="skeleton mt-3 h-3 w-72 rounded-sm" />
+          <div className="mt-8 grid grid-cols-2 gap-px overflow-hidden rounded-sm border border-ink/10 bg-ink/10 sm:grid-cols-4">
+            {[0, 1, 2, 3].map((i) => (
+              <div key={i} className="skeleton h-20 bg-paper" />
+            ))}
+          </div>
+          <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {[0, 1, 2].map((i) => (
+              <div
+                key={i}
+                className="skeleton h-72 rounded-sm border border-ink/10"
+              />
+            ))}
+          </div>
+        </main>
       </div>
     );
   }
@@ -89,7 +124,7 @@ export default function DashboardPage() {
       <Navbar user={user} onAddClick={() => setModalState({})} />
 
       <main className="container-page py-10">
-        <div className="mb-8">
+        <div className="animate-fade-in-up mb-8">
           <h1 className="font-display text-2xl text-ink">
             Good to see you, {user?.name?.split(" ")[0]}
           </h1>
@@ -102,9 +137,17 @@ export default function DashboardPage() {
 
         {certificates.length > 0 && (
           <>
-            <StatBar certificates={certificates} />
+            <div
+              className="animate-fade-in-up"
+              style={{ animationDelay: "60ms" }}
+            >
+              <StatBar certificates={certificates} />
+            </div>
 
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div
+              className="animate-fade-in-up mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
+              style={{ animationDelay: "110ms" }}
+            >
               <div className="relative w-full max-w-xs sm:w-64">
                 <Search
                   size={15}
@@ -123,7 +166,7 @@ export default function DashboardPage() {
                   <button
                     key={f.value}
                     onClick={() => setStatusFilter(f.value)}
-                    className={`rounded-full border px-3 py-1.5 text-xs font-medium transition ${
+                    className={`rounded-full border px-3 py-1.5 text-xs font-medium transition active:scale-95 ${
                       statusFilter === f.value
                         ? "border-ink bg-ink text-paper"
                         : "border-ink/15 text-slate hover:border-ink/40"
@@ -139,17 +182,21 @@ export default function DashboardPage() {
 
         <div className="mt-6">
           {certificates.length === 0 ? (
-            <EmptyState onAddClick={() => setModalState({})} />
+            <div className="animate-fade-in-up">
+              <EmptyState onAddClick={() => setModalState({})} />
+            </div>
           ) : filtered.length === 0 ? (
-            <p className="py-16 text-center text-sm text-slate">
+            <p className="animate-fade-in py-16 text-center text-sm text-slate">
               No certificates match your search.
             </p>
           ) : (
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {filtered.map((c) => (
+              {filtered.map((c, i) => (
                 <CertificateCard
                   key={c._id}
                   certificate={c}
+                  style={{ animationDelay: `${Math.min(i, 8) * 60}ms` }}
+                  onView={setViewTarget}
                   onEdit={setModalState}
                   onDelete={setDeleteTarget}
                 />
@@ -158,6 +205,15 @@ export default function DashboardPage() {
           )}
         </div>
       </main>
+
+      {viewTarget && (
+        <CertificateViewModal
+          certificate={viewTarget}
+          onClose={() => setViewTarget(null)}
+          onEdit={openEditFromView}
+          onDelete={openDeleteFromView}
+        />
+      )}
 
       {modalState !== null && (
         <CertificateModal

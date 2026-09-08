@@ -99,8 +99,8 @@ export default function CertificateModal({ initial, onClose, onSaved }) {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-ink/50 px-4 py-8 backdrop-blur-sm">
-      <div className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-sm border border-ink/10 bg-paper shadow-card">
+    <div className="animate-overlay-in fixed inset-0 z-50 flex items-center justify-center bg-ink/50 px-4 py-8 backdrop-blur-sm">
+      <div className="animate-scale-in max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-sm border border-ink/10 bg-paper shadow-card">
         <div className="flex items-center justify-between border-b border-ink/10 px-6 py-4">
           <h2 className="font-display text-lg text-ink">
             {isEdit ? "Edit certificate" : "Add a certificate"}
