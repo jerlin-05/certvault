@@ -1,5 +1,9 @@
+"use client";
+
 import Link from "next/link";
+import { motion } from "framer-motion";
 import { FolderLock, BellRing, MailCheck } from "lucide-react";
+import GradientMesh from "@/components/GradientMesh";
 
 const features = [
   {
@@ -21,8 +25,8 @@ const features = [
 
 export default function LandingPage() {
   return (
-    <main className="min-h-screen bg-paper">
-      <header className="border-b border-ink/10">
+    <main className="min-h-screen overflow-hidden bg-paper">
+      <header className="relative z-10 border-b border-ink/10">
         <div className="container-page flex items-center justify-between py-5">
           <div className="flex items-center gap-2">
             <SealMark />
@@ -39,7 +43,7 @@ export default function LandingPage() {
             </Link>
             <Link
               href="/register"
-              className="rounded-sm bg-ink px-4 py-2 text-paper transition hover:bg-ink-light"
+              className="rounded-sm bg-ink px-4 py-2 text-paper transition hover:bg-ink-light active:scale-95"
             >
               Create account
             </Link>
@@ -47,48 +51,57 @@ export default function LandingPage() {
         </div>
       </header>
 
-      <section className="container-page grid gap-16 py-20 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:py-28">
-        <div className="animate-fade-in-up">
-          <p className="mb-5 font-sans text-sm text-gold-dark">
-            Certificate &amp; license tracking
-          </p>
-          <h1 className="font-display text-[2.6rem] leading-[1.08] text-ink sm:text-5xl">
-            Every certificate, tracked to the day it matters.
-          </h1>
-          <p className="mt-6 max-w-md text-[17px] leading-relaxed text-slate">
-            Diplomas, licenses, insurance policies, domain certs, safety
-            training — keep them in one vault and know exactly when each one
-            needs renewing, without checking a spreadsheet.
-          </p>
-          <div className="mt-9 flex flex-wrap items-center gap-4">
-            <Link
-              href="/register"
-              className="rounded-sm bg-ink px-6 py-3 text-sm font-medium text-paper transition hover:bg-ink-light active:scale-95"
-            >
-              Start your vault
-            </Link>
-            <Link
-              href="/login"
-              className="rounded-sm border border-ink/15 px-6 py-3 text-sm font-medium text-ink transition hover:border-ink/40 active:scale-95"
-            >
-              I already have an account
-            </Link>
-          </div>
-          <p className="mt-6 text-xs text-slate-light">
-            No credit card. Set an alert window once and forget about it.
-          </p>
-        </div>
+      <section className="relative">
+        <GradientMesh variant="light" />
+        <div className="container-page relative z-10 grid gap-16 py-20 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:py-28">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <p className="mb-5 font-sans text-sm text-gold-dark">
+              Certificate &amp; license tracking
+            </p>
+            <h1 className="font-display text-[2.6rem] leading-[1.08] text-ink sm:text-5xl">
+              Every certificate, tracked to the day it matters.
+            </h1>
+            <p className="mt-6 max-w-md text-[17px] leading-relaxed text-slate">
+              Diplomas, licenses, insurance policies, domain certs, safety
+              training — keep them in one vault and know exactly when each
+              one needs renewing, without checking a spreadsheet.
+            </p>
+            <div className="mt-9 flex flex-wrap items-center gap-4">
+              <Link
+                href="/register"
+                className="rounded-sm bg-ink px-6 py-3 text-sm font-medium text-paper transition hover:bg-ink-light active:scale-95"
+              >
+                Start your vault
+              </Link>
+              <Link
+                href="/login"
+                className="rounded-sm border border-ink/15 px-6 py-3 text-sm font-medium text-ink transition hover:border-ink/40 active:scale-95"
+              >
+                I already have an account
+              </Link>
+            </div>
+            <p className="mt-6 text-xs text-slate-light">
+              No credit card. Set an alert window once and forget about it.
+            </p>
+          </motion.div>
 
-        <HeroStack />
+          <HeroStack />
+        </div>
       </section>
 
-      <section className="border-y border-ink/10 bg-ink-light/[0.02]">
+      <section className="relative border-y border-ink/10 bg-ink-light/[0.02]">
         <div className="container-page grid gap-12 py-20 sm:grid-cols-3">
           {features.map((f, i) => (
-            <div
+            <motion.div
               key={f.title}
-              className="animate-fade-in-up"
-              style={{ animationDelay: `${i * 90}ms` }}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.5, delay: i * 0.1 }}
             >
               <span className="mb-4 flex h-10 w-10 items-center justify-center rounded-full border border-gold/30 bg-gold/10 text-gold-dark">
                 <f.icon size={17} strokeWidth={1.75} />
@@ -97,7 +110,7 @@ export default function LandingPage() {
               <p className="mt-3 text-[15px] leading-relaxed text-slate">
                 {f.body}
               </p>
-            </div>
+            </motion.div>
           ))}
         </div>
       </section>
@@ -120,7 +133,12 @@ function SealMark() {
 
 function HeroStack() {
   return (
-    <div className="relative mx-auto h-[360px] w-full max-w-sm">
+    <motion.div
+      initial={{ opacity: 0, scale: 0.94 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+      className="relative mx-auto h-[360px] w-full max-w-sm"
+    >
       <MockCard
         className="absolute left-4 top-10 -rotate-6"
         style={{ animationDelay: "0s", animationDuration: "6.5s" }}
@@ -145,7 +163,7 @@ function HeroStack() {
         date="Expired 19 Jun 2026"
         tone="rust"
       />
-    </div>
+    </motion.div>
   );
 }
 

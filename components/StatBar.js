@@ -1,5 +1,9 @@
+"use client";
+
+import { motion } from "framer-motion";
 import { FolderOpen, TriangleAlert, CircleX, ShieldCheck } from "lucide-react";
 import { getCertificateStatus } from "@/lib/status";
+import AnimatedCounter from "@/components/AnimatedCounter";
 
 export default function StatBar({ certificates }) {
   const total = certificates.length;
@@ -28,20 +32,23 @@ export default function StatBar({ certificates }) {
   return (
     <div className="grid grid-cols-2 gap-px overflow-hidden rounded-sm border border-ink/10 bg-ink/10 sm:grid-cols-4">
       {stats.map((s) => (
-        <div
+        <motion.div
           key={s.label}
+          whileHover={{ backgroundColor: "rgba(18,27,46,0.02)" }}
           className="flex items-start justify-between gap-3 bg-paper px-5 py-4"
         >
           <div>
             <span className="text-xs text-slate">{s.label}</span>
-            <p className="mt-1.5 font-display text-2xl text-ink">{s.value}</p>
+            <p className="mt-1.5 font-display text-2xl text-ink">
+              <AnimatedCounter value={s.value} />
+            </p>
           </div>
           <span
             className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full ${toneStyles[s.tone]}`}
           >
             <s.icon size={16} strokeWidth={1.9} />
           </span>
-        </div>
+        </motion.div>
       ))}
     </div>
   );

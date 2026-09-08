@@ -1,5 +1,9 @@
+"use client";
+
 import Link from "next/link";
+import { motion } from "framer-motion";
 import { ShieldCheck, BellRing, FolderLock } from "lucide-react";
+import GradientMesh from "@/components/GradientMesh";
 
 const PANEL_POINTS = [
   {
@@ -23,6 +27,7 @@ export default function AuthShell({ children }) {
   return (
     <main className="grid min-h-screen lg:grid-cols-[1fr_1fr] xl:grid-cols-[1.05fr_0.95fr]">
       <section className="relative hidden overflow-hidden bg-ink lg:flex lg:flex-col lg:justify-between lg:px-14 lg:py-12 xl:px-20">
+        <GradientMesh variant="dark" />
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 opacity-[0.05]"
@@ -73,7 +78,12 @@ export default function AuthShell({ children }) {
       </section>
 
       <section className="flex items-center justify-center bg-paper px-6 py-16">
-        <div className="w-full max-w-sm">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          className="w-full max-w-sm"
+        >
           <Link
             href="/"
             className="mb-10 flex items-center gap-2 text-sm text-slate lg:hidden"
@@ -84,7 +94,7 @@ export default function AuthShell({ children }) {
             CertVault
           </Link>
           {children}
-        </div>
+        </motion.div>
       </section>
     </main>
   );

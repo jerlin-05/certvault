@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
+import { motion } from "framer-motion";
 import { X, ImagePlus } from "lucide-react";
 
 const CATEGORIES = [
@@ -99,8 +100,22 @@ export default function CertificateModal({ initial, onClose, onSaved }) {
   }
 
   return (
-    <div className="animate-overlay-in fixed inset-0 z-50 flex items-center justify-center bg-ink/50 px-4 py-8 backdrop-blur-sm">
-      <div className="animate-scale-in max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-sm border border-ink/10 bg-paper shadow-card">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-ink/50 px-4 py-8 backdrop-blur-sm"
+      onClick={onClose}
+    >
+      <motion.div
+        initial={{ opacity: 0, scale: 0.94, y: 16 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.96, y: 10 }}
+        transition={{ type: "spring", stiffness: 300, damping: 28 }}
+        onClick={(e) => e.stopPropagation()}
+        className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-sm border border-ink/10 bg-paper shadow-card"
+      >
         <div className="flex items-center justify-between border-b border-ink/10 px-6 py-4">
           <h2 className="font-display text-lg text-ink">
             {isEdit ? "Edit certificate" : "Add a certificate"}
@@ -252,7 +267,7 @@ export default function CertificateModal({ initial, onClose, onSaved }) {
             </button>
           </div>
         </form>
-      </div>
+      </motion.div>
 
       <style jsx global>{`
         .input {
@@ -270,7 +285,7 @@ export default function CertificateModal({ initial, onClose, onSaved }) {
           border-color: #b8863b;
         }
       `}</style>
-    </div>
+    </motion.div>
   );
 }
 

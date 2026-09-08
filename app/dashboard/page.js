@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
+import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
 import { Search } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import StatBar from "@/components/StatBar";
@@ -18,6 +19,24 @@ const STATUS_FILTERS = [
   { value: "rust", label: "Expired" },
   { value: "forest", label: "In good standing" },
 ];
+
+const gridVariants = {
+  hidden: {},
+  show: {
+    transition: { staggerChildren: 0.06, delayChildren: 0.05 },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 18, scale: 0.98 },
+  show: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { type: "spring", stiffness: 260, damping: 24 },
+  },
+  exit: { opacity: 0, scale: 0.95, transition: { duration: 0.15 } },
+};
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -67,7 +86,6 @@ export default function DashboardPage() {
         ? prev.map((c) => (c._id === certificate._id ? certificate : c))
         : [...prev, certificate];
     });
-    // Keep the viewer in sync if we just edited the certificate being viewed.
     setViewTarget((prev) =>
       prev && prev._id === certificate._id ? certificate : prev
     );
@@ -124,7 +142,12 @@ export default function DashboardPage() {
       <Navbar user={user} onAddClick={() => setModalState({})} />
 
       <main className="container-page py-10">
-        <div className="animate-fade-in-up mb-8">
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+          className="mb-8"
+        >
           <h1 className="font-display text-2xl text-ink">
             Good to see you, {user?.name?.split(" ")[0]}
           </h1>
@@ -133,20 +156,23 @@ export default function DashboardPage() {
               ? "Add your first certificate to get started."
               : "Here's the current state of your vault."}
           </p>
-        </div>
+        </motion.div>
 
         {certificates.length > 0 && (
           <>
-            <div
-              className="animate-fade-in-up"
-              style={{ animationDelay: "60ms" }}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.06 }}
             >
               <StatBar certificates={certificates} />
-            </div>
+            </motion.div>
 
-            <div
-              className="animate-fade-in-up mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
-              style={{ animationDelay: "110ms" }}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.12 }}
+              className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
             >
               <div className="relative w-full max-w-xs sm:w-64">
                 <Search
@@ -161,76 +187,121 @@ export default function DashboardPage() {
                   className="w-full rounded-sm border border-ink/15 bg-paper py-2 pl-9 pr-3 text-sm text-ink outline-none transition focus:border-gold focus:ring-1 focus:ring-gold/25"
                 />
               </div>
-              <div className="flex flex-wrap gap-2">
-                {STATUS_FILTERS.map((f) => (
-                  <button
-                    key={f.value}
-                    onClick={() => setStatusFilter(f.value)}
-                    className={`rounded-full border px-3 py-1.5 text-xs font-medium transition active:scale-95 ${
-                      statusFilter === f.value
-                        ? "border-ink bg-ink text-paper"
-                        : "border-ink/15 text-slate hover:border-ink/40"
-                    }`}
-                  >
-                    {f.label}
-                  </button>
-                ))}
-              </div>
-            </div>
+              <LayoutGroup id="status-filter">
+                <div className="flex flex-wrap gap-2">
+                  {STATUS_FILTERS.map((f) => {
+                    const active = statusFilter === f.value;
+                    return (
+                      <button
+                        key={f.value}
+                        onClick={() => setStatusFilter(f.value)}
+                        className={`relative rounded-full px-3 py-1.5 text-xs font-medium transition-colors active:scale-95 ${
+                          active
+                            ? "text-paper"
+                            : "border border-ink/15 text-slate hover:border-ink/40 hover:text-ink"
+                        }`}
+                      >
+                        {active && (
+                          <motion.span
+                            layoutId="active-filter-pill"
+                            className="absolute inset-0 rounded-full bg-ink"
+                            transition={{
+                              type: "spring",
+                              stiffness: 400,
+                              damping: 32,
+                            }}
+                          />
+                        )}
+                        <span className="relative z-10">{f.label}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </LayoutGroup>
+            </motion.div>
           </>
         )}
 
         <div className="mt-6">
           {certificates.length === 0 ? (
-            <div className="animate-fade-in-up">
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4 }}
+            >
               <EmptyState onAddClick={() => setModalState({})} />
-            </div>
+            </motion.div>
           ) : filtered.length === 0 ? (
-            <p className="animate-fade-in py-16 text-center text-sm text-slate">
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="py-16 text-center text-sm text-slate"
+            >
               No certificates match your search.
-            </p>
+            </motion.p>
           ) : (
-            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {filtered.map((c, i) => (
-                <CertificateCard
-                  key={c._id}
-                  certificate={c}
-                  style={{ animationDelay: `${Math.min(i, 8) * 60}ms` }}
-                  onView={setViewTarget}
-                  onEdit={setModalState}
-                  onDelete={setDeleteTarget}
-                />
-              ))}
-            </div>
+            <motion.div
+              variants={gridVariants}
+              initial="hidden"
+              animate="show"
+              className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"
+            >
+              <AnimatePresence mode="popLayout">
+                {filtered.map((c) => (
+                  <motion.div
+                    key={c._id}
+                    layout
+                    variants={cardVariants}
+                    exit="exit"
+                  >
+                    <CertificateCard
+                      certificate={c}
+                      onView={setViewTarget}
+                      onEdit={setModalState}
+                      onDelete={setDeleteTarget}
+                    />
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </motion.div>
           )}
         </div>
       </main>
 
-      {viewTarget && (
-        <CertificateViewModal
-          certificate={viewTarget}
-          onClose={() => setViewTarget(null)}
-          onEdit={openEditFromView}
-          onDelete={openDeleteFromView}
-        />
-      )}
+      <AnimatePresence>
+        {viewTarget && (
+          <CertificateViewModal
+            key="view-modal"
+            certificate={viewTarget}
+            onClose={() => setViewTarget(null)}
+            onEdit={openEditFromView}
+            onDelete={openDeleteFromView}
+          />
+        )}
+      </AnimatePresence>
 
-      {modalState !== null && (
-        <CertificateModal
-          initial={modalState._id ? modalState : null}
-          onClose={() => setModalState(null)}
-          onSaved={handleSaved}
-        />
-      )}
+      <AnimatePresence>
+        {modalState !== null && (
+          <CertificateModal
+            key="edit-modal"
+            initial={modalState._id ? modalState : null}
+            onClose={() => setModalState(null)}
+            onSaved={handleSaved}
+          />
+        )}
+      </AnimatePresence>
 
-      {deleteTarget && (
-        <ConfirmDialog
-          title="Delete this certificate?"
-          body={`"${deleteTarget.name}" will be permanently removed from your vault.`}
-          onConfirm={handleDeleteConfirmed}
-          onCancel={() => setDeleteTarget(null)}
-        />
-      )}
+      <AnimatePresence>
+        {deleteTarget && (
+          <ConfirmDialog
+            key="delete-modal"
+            title="Delete this certificate?"
+            body={`"${deleteTarget.name}" will be permanently removed from your vault.`}
+            onConfirm={handleDeleteConfirmed}
+            onCancel={() => setDeleteTarget(null)}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }

@@ -1,9 +1,26 @@
+"use client";
+
+import { motion } from "framer-motion";
 import { TriangleAlert } from "lucide-react";
 
 export default function ConfirmDialog({ title, body, onConfirm, onCancel }) {
   return (
-    <div className="animate-overlay-in fixed inset-0 z-50 flex items-center justify-center bg-ink/50 px-4 backdrop-blur-sm">
-      <div className="animate-scale-in w-full max-w-sm rounded-sm border border-ink/10 bg-paper p-6 shadow-card">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.18 }}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-ink/50 px-4 backdrop-blur-sm"
+      onClick={onCancel}
+    >
+      <motion.div
+        initial={{ opacity: 0, scale: 0.92, y: 10 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.95, y: 6 }}
+        transition={{ type: "spring", stiffness: 340, damping: 28 }}
+        onClick={(e) => e.stopPropagation()}
+        className="w-full max-w-sm rounded-sm border border-ink/10 bg-paper p-6 shadow-card"
+      >
         <span className="flex h-10 w-10 items-center justify-center rounded-full bg-rust-light text-rust">
           <TriangleAlert size={18} strokeWidth={1.9} />
         </span>
@@ -12,18 +29,18 @@ export default function ConfirmDialog({ title, body, onConfirm, onCancel }) {
         <div className="mt-6 flex gap-3">
           <button
             onClick={onCancel}
-            className="flex-1 rounded-sm border border-ink/15 py-2.5 text-sm font-medium text-ink transition hover:border-ink/40"
+            className="flex-1 rounded-sm border border-ink/15 py-2.5 text-sm font-medium text-ink transition hover:border-ink/40 active:scale-95"
           >
             Cancel
           </button>
           <button
             onClick={onConfirm}
-            className="flex-1 rounded-sm bg-rust py-2.5 text-sm font-medium text-paper transition hover:bg-rust/90"
+            className="flex-1 rounded-sm bg-rust py-2.5 text-sm font-medium text-paper transition hover:bg-rust/90 active:scale-95"
           >
             Delete
           </button>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }

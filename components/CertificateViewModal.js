@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { motion } from "framer-motion";
 import {
   X,
   Pencil,
@@ -50,12 +51,20 @@ export default function CertificateViewModal({
     : null;
 
   return (
-    <div
-      className="animate-overlay-in fixed inset-0 z-50 flex items-center justify-center bg-ink/60 px-4 py-8 backdrop-blur-sm"
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-ink/60 px-4 py-8 backdrop-blur-sm"
       onClick={onClose}
     >
-      <div
-        className="animate-scale-in grid max-h-[88vh] w-full max-w-3xl grid-cols-1 overflow-hidden rounded-sm border border-ink/10 bg-paper shadow-card md:grid-cols-[1.1fr_1fr]"
+      <motion.div
+        initial={{ opacity: 0, scale: 0.94, y: 16 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.96, y: 10 }}
+        transition={{ type: "spring", stiffness: 300, damping: 28 }}
+        className="grid max-h-[88vh] w-full max-w-3xl grid-cols-1 overflow-hidden rounded-sm border border-ink/10 bg-paper shadow-card md:grid-cols-[1.1fr_1fr]"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="paper-texture relative flex items-center justify-center bg-ink-light/[0.04] p-6 md:max-h-[88vh]">
@@ -154,8 +163,8 @@ export default function CertificateViewModal({
             </button>
           </div>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }
 
