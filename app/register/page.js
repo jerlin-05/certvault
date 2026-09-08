@@ -29,8 +29,7 @@ export default function RegisterPage() {
         setError(data.error || "Could not create your account.");
         return;
       }
-      router.push("/dashboard");
-      router.refresh();
+      router.push(`/verify-email?email=${encodeURIComponent(data.email)}`);
     } catch {
       setError("Network error — please try again.");
     } finally {

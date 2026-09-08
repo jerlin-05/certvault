@@ -3,6 +3,8 @@ import bcrypt from "bcryptjs";
 import { connectDB } from "@/lib/mongodb";
 import User from "@/models/User";
 import { signSession, setSessionCookie } from "@/lib/auth";
+import { issueOtp, OTP_RESEND_COOLDOWN_MS } from "@/lib/otp";
+import { sendOtpEmail } from "@/lib/email";
 
 export async function POST(request) {
   try {
@@ -33,6 +35,25 @@ export async function POST(request) {
       );
     }
 
+    if (!user.emailVerified) {
+      const canResend =
+        !user.otpLastSentAt ||
+        Date.now() - user.otpLastSentAt.getTime() >= OTP_RESEND_COOLDOWN_MS;
+      if (canResend) {
+        const otp = issueOtp(user);
+        await user.save();
+        await sendOtpEmail({ to: user.email, recipientName: user.name, otp });
+      }
+      return NextResponse.json(
+        {
+          error: "Please verify your email to continue.",
+          requiresVerification: true,
+          email: user.email,
+        },
+        { status: 403 }
+      );
+    }
+
     const token = signSession(user);
     setSessionCookie(token);
 
@@ -47,3 +68,4 @@ export async function POST(request) {
     );
   }
 }
+

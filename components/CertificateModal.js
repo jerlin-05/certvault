@@ -21,6 +21,22 @@ function toBase64(file) {
   });
 }
 
+function isValidDateString(value) {
+  // Must be exactly YYYY-MM-DD with a plausible 4-digit year.
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+  const [year, month, day] = value.split("-").map(Number);
+  if (year < 1900 || year > 2100) return false;
+  const d = new Date(value);
+  return (
+    d.getUTCFullYear() === year &&
+    d.getUTCMonth() + 1 === month &&
+    d.getUTCDate() === day
+  );
+}
+
+const DATE_MIN = "1900-01-01";
+const DATE_MAX = "2100-12-31";
+
 export default function CertificateModal({ initial, onClose, onSaved }) {
   const isEdit = Boolean(initial?._id);
   const fileInputRef = useRef(null);
@@ -61,6 +77,14 @@ export default function CertificateModal({ initial, onClose, onSaved }) {
 
     if (!form.name.trim() || !form.expiryDate) {
       setError("Certificate name and expiry date are required.");
+      return;
+    }
+    if (form.issueDate && !isValidDateString(form.issueDate)) {
+      setError("Issue date isn't valid — please check the day, month and year.");
+      return;
+    }
+    if (!isValidDateString(form.expiryDate)) {
+      setError("Expiry date isn't valid — please check the day, month and year.");
       return;
     }
 
@@ -193,6 +217,8 @@ export default function CertificateModal({ initial, onClose, onSaved }) {
             <Field label="Issue date">
               <input
                 type="date"
+                min={DATE_MIN}
+                max={DATE_MAX}
                 value={form.issueDate}
                 onChange={(e) =>
                   setForm({ ...form, issueDate: e.target.value })
@@ -204,6 +230,8 @@ export default function CertificateModal({ initial, onClose, onSaved }) {
               <input
                 type="date"
                 required
+                min={DATE_MIN}
+                max={DATE_MAX}
                 value={form.expiryDate}
                 onChange={(e) =>
                   setForm({ ...form, expiryDate: e.target.value })

@@ -25,6 +25,7 @@ async function main() {
       name: { type: String, required: true, trim: true },
       email: { type: String, required: true, unique: true, trim: true, lowercase: true },
       password: { type: String, required: true },
+      emailVerified: { type: Boolean, default: false },
     },
     { timestamps: true }
   );
@@ -37,7 +38,12 @@ async function main() {
   }
 
   const hashed = await bcrypt.hash(password, 10);
-  const user = await User.create({ name, email, password: hashed });
+  const user = await User.create({
+    name,
+    email,
+    password: hashed,
+    emailVerified: true, // created directly by an admin — skip OTP verification
+  });
   console.log(`Created user ${user.email} (${user._id})`);
   process.exit(0);
 }
