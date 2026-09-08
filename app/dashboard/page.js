@@ -253,6 +253,7 @@ export default function DashboardPage() {
                     layout
                     variants={cardVariants}
                     exit="exit"
+                    className="h-full"
                   >
                     <CertificateCard
                       certificate={c}

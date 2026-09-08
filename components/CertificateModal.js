@@ -4,15 +4,9 @@ import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { X, ImagePlus } from "lucide-react";
 
-const CATEGORIES = [
-  "General",
-  "Education",
-  "Professional",
-  "Health & Safety",
-  "Legal",
-  "IT & Security",
-  "Insurance",
-];
+import { CATEGORY_THEME } from "@/lib/category";
+
+const CATEGORIES = Object.keys(CATEGORY_THEME);
 
 function toBase64(file) {
   return new Promise((resolve, reject) => {
