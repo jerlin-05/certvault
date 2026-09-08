@@ -8,10 +8,17 @@ import {
   MailCheck,
   ShieldCheck,
   ArrowRight,
-  PlayCircle,
   CheckCircle2,
 } from "lucide-react";
 import GradientMesh from "@/components/GradientMesh";
+
+function handleNavClick(e, id) {
+  e.preventDefault();
+  const el = document.getElementById(id);
+  if (el) {
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+}
 
 const features = [
   {
@@ -31,8 +38,6 @@ const features = [
   },
 ];
 
-const trustLogos = ["Amazon", "Google", "Microsoft", "Deloitte"];
-
 export default function LandingPage() {
   return (
     <main className="min-h-screen overflow-hidden bg-paper">
@@ -46,14 +51,19 @@ export default function LandingPage() {
             </span>
           </div>
           <nav className="hidden items-center gap-8 text-sm text-paper/70 md:flex">
-            <a href="#features" className="transition hover:text-paper">
+            <a
+              href="#features"
+              onClick={(e) => handleNavClick(e, "features")}
+              className="transition hover:text-paper"
+            >
               Features
             </a>
-            <a href="#how" className="transition hover:text-paper">
+            <a
+              href="#how"
+              onClick={(e) => handleNavClick(e, "how")}
+              className="transition hover:text-paper"
+            >
               How it works
-            </a>
-            <a href="#" className="transition hover:text-paper">
-              Pricing
             </a>
           </nav>
           <div className="flex items-center gap-3">
@@ -115,10 +125,6 @@ export default function LandingPage() {
                   className="transition group-hover:translate-x-0.5"
                 />
               </Link>
-              <button className="flex items-center gap-2 rounded-xl border border-white/15 px-6 py-3.5 text-sm font-medium text-paper transition hover:border-white/35 active:scale-95">
-                <PlayCircle size={16} />
-                View demo
-              </button>
             </div>
             <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-xs text-paper/45">
               <span className="flex items-center gap-1.5">
@@ -137,14 +143,6 @@ export default function LandingPage() {
           </motion.div>
 
           <HeroStack />
-        </div>
-
-        <div className="container-page relative z-10 flex flex-wrap items-center justify-center gap-x-12 gap-y-4 border-t border-white/10 py-8 text-xs uppercase tracking-wider text-paper/30">
-          {trustLogos.map((l) => (
-            <span key={l} className="font-medium">
-              {l}
-            </span>
-          ))}
         </div>
       </section>
 
