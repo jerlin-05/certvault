@@ -42,9 +42,13 @@ async function runCheck() {
     const shouldAlertOnExpiryDay =
       daysRemaining === 0 && !cert.alertsSent.includes(0);
 
-    // Once, after the certificate has actually lapsed.
+    // After expiry: send once per calendar day it stays expired — day 1,
+    // day 2, day 3, and so on — until the certificate is renewed (which
+    // resets alertsSent) or removed. Each day has its own marker
+    // (daysRemaining is -1, -2, -3, ...) so it never double-sends the same
+    // day but always sends the next one.
     const shouldAlertAfterExpiry =
-      daysRemaining < 0 && !cert.alertsSent.includes(-1);
+      daysRemaining < 0 && !cert.alertsSent.includes(daysRemaining);
 
     if (
       !shouldAlertOnAlertDay &&
@@ -65,7 +69,7 @@ async function runCheck() {
 
       if (shouldAlertOnAlertDay) cert.alertsSent.push(cert.alertDaysBefore);
       if (shouldAlertOnExpiryDay) cert.alertsSent.push(0);
-      if (shouldAlertAfterExpiry) cert.alertsSent.push(-1);
+      if (shouldAlertAfterExpiry) cert.alertsSent.push(daysRemaining);
       await cert.save();
       emailsSent += 1;
     } catch (err) {
