@@ -3,8 +3,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
-import { Search, Plus, Bell } from "lucide-react";
+import { Search, Plus } from "lucide-react";
 import Sidebar from "@/components/Sidebar";
+import UserMenu from "@/components/UserMenu";
 import StatBar from "@/components/StatBar";
 import CertificateCard from "@/components/CertificateCard";
 import CertificateModal from "@/components/CertificateModal";
@@ -190,24 +191,13 @@ export default function DashboardPage() {
           </div>
           <div className="flex items-center gap-3">
             <button
-              aria-label="Notifications"
-              className="relative flex h-9 w-9 items-center justify-center rounded-xl border border-ink/10 text-slate transition hover:border-ink/25 hover:text-ink"
-            >
-              <Bell size={16} />
-              {attentionItems.length > 0 && (
-                <span className="absolute right-2 top-2 h-1.5 w-1.5 rounded-full bg-rust" />
-              )}
-            </button>
-            <button
               onClick={() => setModalState({})}
               className="flex items-center gap-1.5 rounded-xl bg-gold px-4 py-2.5 text-sm font-semibold text-ink shadow-glow transition hover:bg-gold-light active:scale-95"
             >
               <Plus size={15} strokeWidth={2.25} />
               Add certificate
             </button>
-            <span className="hidden h-9 w-9 items-center justify-center rounded-full bg-ink/[0.06] text-xs font-medium text-ink sm:flex">
-              {user?.name?.[0]?.toUpperCase() || "U"}
-            </span>
+            <UserMenu user={user} />
           </div>
         </div>
       </header>
