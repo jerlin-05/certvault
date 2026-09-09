@@ -25,14 +25,14 @@ export default function PasswordField({
           autoComplete={autoComplete}
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="w-full rounded-xl border border-ink/15 bg-paper-card px-3.5 py-3 pr-11 text-sm text-ink outline-none transition focus:border-gold focus:ring-1 focus:ring-gold/25"
+          className="w-full rounded-xl border border-white/15 bg-paper-card px-3.5 py-3 pr-11 text-sm text-paper outline-none transition focus:border-gold focus:ring-1 focus:ring-gold/25"
         />
         <button
           type="button"
           onClick={() => setVisible((v) => !v)}
           aria-label={visible ? "Hide password" : "Show password"}
           tabIndex={-1}
-          className="absolute right-0 top-0 flex h-full w-10 items-center justify-center text-slate-light transition hover:text-ink"
+          className="absolute right-0 top-0 flex h-full w-10 items-center justify-center text-slate-light transition hover:text-paper"
         >
           {visible ? <EyeOffIcon /> : <EyeIcon />}
         </button>

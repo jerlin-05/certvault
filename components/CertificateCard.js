@@ -49,7 +49,7 @@ export default function CertificateCard({
     <motion.div
       whileHover={{ y: -4 }}
       transition={{ type: "spring", stiffness: 300, damping: 24 }}
-      className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-ink/10 bg-paper-card shadow-card"
+      className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-paper-card shadow-card"
     >
       <button
         type="button"
@@ -84,7 +84,7 @@ export default function CertificateCard({
           </span>
         </div>
 
-        <h3 className="mt-4 line-clamp-2 min-h-[2.6rem] font-display text-lg leading-snug text-ink">
+        <h3 className="mt-4 line-clamp-2 min-h-[2.6rem] font-display text-lg leading-snug text-paper">
           {certificate.name}
         </h3>
         <p className="mt-1 flex min-h-[1.25rem] items-center gap-1.5 text-sm text-slate">
@@ -111,7 +111,7 @@ export default function CertificateCard({
               {status.label}
             </span>
           </div>
-          <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-ink/[0.06]">
+          <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-white/[0.06]">
             <div
               className={`h-full rounded-full ${toneBar[status.tone]}`}
               style={{ width: `${status.tone === "rust" ? 100 : progressPct}%` }}
@@ -120,10 +120,10 @@ export default function CertificateCard({
         </div>
       </button>
 
-      <div className="flex gap-2 border-t border-ink/10 px-5 py-3 opacity-0 transition group-hover:opacity-100">
+      <div className="flex gap-2 border-t border-white/10 px-5 py-3 opacity-0 transition group-hover:opacity-100">
         <button
           onClick={() => onEdit(certificate)}
-          className="flex flex-1 items-center justify-center gap-1.5 rounded-xl border border-ink/15 py-2 text-xs font-medium text-ink transition hover:border-ink/40 active:scale-95"
+          className="flex flex-1 items-center justify-center gap-1.5 rounded-xl border border-white/15 py-2 text-xs font-medium text-paper transition hover:border-white/40 active:scale-95"
         >
           <Pencil size={13} />
           Edit
@@ -132,7 +132,7 @@ export default function CertificateCard({
           <button
             onClick={() => onArchive(certificate)}
             aria-label={certificate.archived ? "Restore certificate" : "Archive certificate"}
-            className="flex items-center justify-center rounded-xl border border-ink/15 px-3 text-ink transition hover:border-ink/40 active:scale-95"
+            className="flex items-center justify-center rounded-xl border border-white/15 px-3 text-paper transition hover:border-white/40 active:scale-95"
           >
             {certificate.archived ? (
               <ArchiveRestore size={14} />

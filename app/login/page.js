@@ -47,7 +47,7 @@ export default function LoginPage() {
       <p className="mb-2 text-xs font-medium tracking-wide text-gold-dark">
         Welcome back
       </p>
-      <h1 className="font-display text-[1.85rem] leading-tight text-ink">
+      <h1 className="font-display text-[1.85rem] leading-tight text-paper">
         Sign in to your vault
       </h1>
       <p className="mt-2 text-sm text-slate">
@@ -88,7 +88,7 @@ export default function LoginPage() {
         <button
           type="submit"
           disabled={loading}
-          className="group flex w-full items-center justify-center gap-2 rounded-xl bg-gold px-4 py-3 text-sm font-semibold text-ink transition hover:bg-gold-light disabled:opacity-60"
+          className="group flex w-full items-center justify-center gap-2 rounded-xl bg-gold px-4 py-3 text-sm font-semibold text-paper transition hover:bg-gold-light disabled:opacity-60"
         >
           {loading ? "Signing in…" : "Sign in"}
           {!loading && (

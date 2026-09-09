@@ -7,44 +7,45 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Core neutrals
+        // Core neutrals — dark surfaces
         ink: {
-          DEFAULT: "#0E1526",   // Midnight — primary dark surface
-          light: "#141D34",     // Navy — secondary dark surface
-          soft: "#1E293F",      // raised dark surface (cards on dark bg)
-          border: "rgba(250,249,246,0.10)",
+          DEFAULT: "#0B0A14",   // Void — base page background, darkest
+          light: "#120F1F",     // Slightly raised surface
+          soft: "#1C1830",      // Elevated surface (cards, modals, panels)
+          border: "rgba(255,255,255,0.08)",
         },
+        // "paper" now serves as the light/foreground color on dark surfaces
         paper: {
-          DEFAULT: "#FAF9F6",   // Ivory
-          dim: "#F1EEE7",
-          card: "#FFFFFF",
+          DEFAULT: "#F5F3FA",   // Primary light text
+          dim: "#B9B4C9",       // Secondary light
+          card: "#1C1830",      // Card surface (matches ink.soft for consistency)
         },
         slate: {
-          DEFAULT: "#5B6472",
-          light: "#8A93A0",
+          DEFAULT: "#A6A0B8",   // Secondary text on dark
+          light: "#6E6880",     // Muted / faint text on dark
         },
-        // Brand gold
+        // Brand accent — violet/purple
         gold: {
-          DEFAULT: "#C9A15A",
-          light: "#DEBD84",
-          dark: "#A67F3D",
-          soft: "#F6EDDC",
+          DEFAULT: "#8B5CF6",   // violet-500
+          light: "#A78BFA",     // violet-400, hover
+          dark: "#7C3AED",      // violet-600, links/icons
+          soft: "#241D3D",      // dark violet wash background
         },
-        // Status system (matches reference palette)
+        // Status system — bright on dark washes
         forest: {
-          DEFAULT: "#0FA968",
-          light: "#E3F6ED",
-          dark: "#0B7C4D",
+          DEFAULT: "#34D399",
+          light: "#123024",
+          dark: "#10B981",
         },
         amber: {
-          DEFAULT: "#F2A70B",
-          light: "#FDF0D8",
-          dark: "#B87A05",
+          DEFAULT: "#FBBF24",
+          light: "#332508",
+          dark: "#F59E0B",
         },
         rust: {
-          DEFAULT: "#E74444",
-          light: "#FCE6E6",
-          dark: "#B92E2E",
+          DEFAULT: "#FB7185",
+          light: "#3A1620",
+          dark: "#F43F5E",
         },
       },
       fontFamily: {
@@ -60,13 +61,13 @@ module.exports = {
         "2xl": "28px",
       },
       boxShadow: {
-        card: "0 1px 2px rgba(14, 21, 38, 0.04), 0 12px 32px -14px rgba(14, 21, 38, 0.16)",
-        panel: "0 1px 3px rgba(14, 21, 38, 0.06)",
-        glow: "0 0 0 1px rgba(201,161,90,0.15), 0 20px 50px -20px rgba(201,161,90,0.35)",
-        dark: "0 20px 60px -20px rgba(0,0,0,0.5)",
+        card: "0 1px 2px rgba(0,0,0,0.3), 0 20px 45px -20px rgba(0,0,0,0.6)",
+        panel: "0 4px 20px -8px rgba(0,0,0,0.55)",
+        glow: "0 0 0 1px rgba(139,92,246,0.25), 0 20px 55px -20px rgba(139,92,246,0.5)",
+        dark: "0 20px 60px -20px rgba(0,0,0,0.7)",
       },
       backgroundImage: {
-        seal: "radial-gradient(circle at 30% 30%, #E4C381 0%, #C9A15A 55%, #A67F3D 100%)",
+        seal: "radial-gradient(circle at 30% 30%, #C4B5FD 0%, #8B5CF6 55%, #6D28D9 100%)",
       },
     },
   },

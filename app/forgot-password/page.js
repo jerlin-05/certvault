@@ -42,7 +42,7 @@ export default function ForgotPasswordPage() {
       <p className="mb-2 text-xs font-medium tracking-wide text-gold-dark">
         Account recovery
       </p>
-      <h1 className="font-display text-[1.85rem] leading-tight text-ink">
+      <h1 className="font-display text-[1.85rem] leading-tight text-paper">
         Reset your password
       </h1>
       <p className="mt-2 text-sm text-slate">
@@ -74,7 +74,7 @@ export default function ForgotPasswordPage() {
           <button
             type="submit"
             disabled={loading}
-            className="group flex w-full items-center justify-center gap-2 rounded-xl bg-gold px-4 py-3 text-sm font-semibold text-ink transition hover:bg-gold-light disabled:opacity-60"
+            className="group flex w-full items-center justify-center gap-2 rounded-xl bg-gold px-4 py-3 text-sm font-semibold text-paper transition hover:bg-gold-light disabled:opacity-60"
           >
             {loading ? "Sending…" : "Send reset link"}
             {!loading && (

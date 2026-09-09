@@ -87,14 +87,14 @@ export default function CertificateViewModal({
         animate={{ x: 0 }}
         exit={{ x: "100%" }}
         transition={{ type: "spring", stiffness: 320, damping: 34 }}
-        className="flex h-full w-full max-w-md flex-col overflow-y-auto border-l border-ink/10 bg-paper shadow-dark"
+        className="flex h-full w-full max-w-md flex-col overflow-y-auto border-l border-white/10 bg-ink-soft shadow-dark"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center justify-between border-b border-ink/10 px-6 py-5">
-          <p className="text-sm font-medium text-ink">Certificate details</p>
+        <div className="flex items-center justify-between border-b border-white/10 px-6 py-5">
+          <p className="text-sm font-medium text-paper">Certificate details</p>
           <button
             onClick={onClose}
-            className="flex h-8 w-8 items-center justify-center rounded-full text-slate transition hover:bg-ink/5 hover:text-ink"
+            className="flex h-8 w-8 items-center justify-center rounded-full text-slate transition hover:bg-white/5 hover:text-paper"
             aria-label="Close"
           >
             <X size={17} />
@@ -103,7 +103,7 @@ export default function CertificateViewModal({
 
         <div className="flex-1 p-6">
           {/* Hero card / certificate preview */}
-          <div className="relative overflow-hidden rounded-2xl border border-ink/10 bg-ink p-6 text-center shadow-card">
+          <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-ink p-6 text-center shadow-card">
             {imageSrc ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
@@ -139,7 +139,7 @@ export default function CertificateViewModal({
             )}
           </div>
 
-          <p className="mt-5 font-display text-xl leading-tight text-ink">
+          <p className="mt-5 font-display text-xl leading-tight text-paper">
             {certificate.name}
           </p>
           <p className="mt-0.5 text-sm text-slate">
@@ -154,16 +154,16 @@ export default function CertificateViewModal({
           </span>
 
           {/* Issue / expiry dates */}
-          <div className="mt-6 grid grid-cols-2 gap-4 border-t border-ink/10 pt-5">
+          <div className="mt-6 grid grid-cols-2 gap-4 border-t border-white/10 pt-5">
             <div>
               <p className="text-xs text-slate-light">Issue date</p>
-              <p className="mt-1 text-sm text-ink">
+              <p className="mt-1 text-sm text-paper">
                 {formatDate(certificate.issueDate)}
               </p>
             </div>
             <div>
               <p className="text-xs text-slate-light">Expiry date</p>
-              <p className="mt-1 text-sm text-ink">
+              <p className="mt-1 text-sm text-paper">
                 {formatDate(certificate.expiryDate)}
               </p>
             </div>
@@ -171,12 +171,12 @@ export default function CertificateViewModal({
 
           {/* Progress */}
           <div className="mt-5">
-            <p className="text-sm text-ink">
+            <p className="text-sm text-paper">
               {remaining >= 0
                 ? `${remaining} day${remaining === 1 ? "" : "s"} remaining`
                 : `Expired ${Math.abs(remaining)} day${Math.abs(remaining) === 1 ? "" : "s"} ago`}
             </p>
-            <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-ink/[0.06]">
+            <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-white/[0.06]">
               <div
                 className={`h-full rounded-full ${toneBar[status.tone]}`}
                 style={{ width: `${status.tone === "rust" ? 100 : progressPct}%` }}
@@ -185,35 +185,35 @@ export default function CertificateViewModal({
           </div>
 
           {/* Category / reminder */}
-          <div className="mt-6 grid grid-cols-2 gap-4 border-t border-ink/10 pt-5">
+          <div className="mt-6 grid grid-cols-2 gap-4 border-t border-white/10 pt-5">
             <div>
               <p className="text-xs text-slate-light">Category</p>
-              <p className="mt-1 text-sm text-ink">
+              <p className="mt-1 text-sm text-paper">
                 {certificate.category || "General"}
               </p>
             </div>
             <div>
               <p className="text-xs text-slate-light">Reminder</p>
-              <p className="mt-1 text-sm text-ink">
+              <p className="mt-1 text-sm text-paper">
                 {certificate.alertDaysBefore} days before expiry
               </p>
             </div>
           </div>
 
           {certificate.notes && (
-            <div className="mt-6 border-t border-ink/10 pt-5">
+            <div className="mt-6 border-t border-white/10 pt-5">
               <p className="text-xs text-slate-light">Notes</p>
-              <p className="mt-2 whitespace-pre-wrap rounded-xl bg-ink/[0.035] p-4 text-sm leading-relaxed text-ink">
+              <p className="mt-2 whitespace-pre-wrap rounded-xl bg-white/[0.035] p-4 text-sm leading-relaxed text-paper">
                 {certificate.notes}
               </p>
             </div>
           )}
         </div>
 
-        <div className="flex gap-3 border-t border-ink/10 p-6">
+        <div className="flex gap-3 border-t border-white/10 p-6">
           <button
             onClick={() => onEdit(certificate)}
-            className="flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-gold py-2.5 text-sm font-semibold text-ink transition hover:bg-gold-light active:scale-95"
+            className="flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-gold py-2.5 text-sm font-semibold text-paper transition hover:bg-gold-light active:scale-95"
           >
             <Pencil size={14} />
             Edit certificate
@@ -222,7 +222,7 @@ export default function CertificateViewModal({
             <button
               onClick={() => onArchive(certificate)}
               aria-label={certificate.archived ? "Restore certificate" : "Archive certificate"}
-              className="flex items-center justify-center rounded-xl border border-ink/15 px-3.5 text-ink transition hover:border-ink/40 active:scale-95"
+              className="flex items-center justify-center rounded-xl border border-white/15 px-3.5 text-paper transition hover:border-white/40 active:scale-95"
             >
               {certificate.archived ? (
                 <ArchiveRestore size={16} />

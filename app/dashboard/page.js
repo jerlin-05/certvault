@@ -145,7 +145,7 @@ export default function DashboardPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-paper lg:pl-64">
+      <div className="min-h-screen bg-ink lg:pl-64">
         <div className="fixed inset-y-0 left-0 hidden w-64 bg-ink lg:block" />
         <main className="container-page py-10">
           <div className="skeleton h-4 w-56 rounded-xl" />
@@ -166,7 +166,7 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-paper lg:pl-64">
+    <div className="min-h-screen bg-ink lg:pl-64">
       <Sidebar
         user={user}
         statusFilter={statusFilter}
@@ -174,7 +174,7 @@ export default function DashboardPage() {
       />
 
       {/* Top bar */}
-      <header className="sticky top-0 z-20 border-b border-ink/10 bg-paper/90 backdrop-blur">
+      <header className="sticky top-0 z-20 border-b border-white/10 bg-ink/90 backdrop-blur">
         <div className="flex items-center justify-between gap-4 px-6 py-4">
           <div className="relative w-full max-w-xs">
             <Search
@@ -186,13 +186,13 @@ export default function DashboardPage() {
               placeholder="Search certificates…"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full rounded-xl border border-ink/15 bg-paper-card py-2.5 pl-9 pr-3 text-sm text-ink outline-none transition focus:border-gold focus:ring-1 focus:ring-gold/25"
+              className="w-full rounded-xl border border-white/15 bg-paper-card py-2.5 pl-9 pr-3 text-sm text-paper outline-none transition focus:border-gold focus:ring-1 focus:ring-gold/25"
             />
           </div>
           <div className="flex items-center gap-3">
             <button
               onClick={() => setModalState({})}
-              className="flex items-center gap-1.5 rounded-xl bg-gold px-4 py-2.5 text-sm font-semibold text-ink shadow-glow transition hover:bg-gold-light active:scale-95"
+              className="flex items-center gap-1.5 rounded-xl bg-gold px-4 py-2.5 text-sm font-semibold text-paper shadow-glow transition hover:bg-gold-light active:scale-95"
             >
               <Plus size={15} strokeWidth={2.25} />
               Add certificate
@@ -209,7 +209,7 @@ export default function DashboardPage() {
           transition={{ duration: 0.4 }}
           className="mb-8"
         >
-          <h1 className="font-display text-2xl text-ink">
+          <h1 className="font-display text-2xl text-paper">
             Good to see you, {user?.name?.split(" ")[0]} 👋
           </h1>
           <p className="mt-1 text-sm text-slate">
@@ -249,7 +249,7 @@ export default function DashboardPage() {
                         onClick={() => setViewTarget(c)}
                         className="flex w-full items-center justify-between rounded-xl bg-paper-card px-4 py-2.5 text-left text-sm shadow-panel transition hover:-translate-y-0.5"
                       >
-                        <span className="text-ink">{c.name}</span>
+                        <span className="text-paper">{c.name}</span>
                         <span
                           className={
                             status.tone === "rust"
@@ -272,7 +272,7 @@ export default function DashboardPage() {
               transition={{ duration: 0.4, delay: 0.14 }}
               className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
             >
-              <h2 className="font-display text-lg text-ink">
+              <h2 className="font-display text-lg text-paper">
                 {statusFilter === "archived" ? "Archived certificates" : "Your certificates"}
               </h2>
               <LayoutGroup id="status-filter">
@@ -285,8 +285,8 @@ export default function DashboardPage() {
                         onClick={() => setStatusFilter(f.value)}
                         className={`relative rounded-full px-3.5 py-1.5 text-xs font-medium transition-colors active:scale-95 ${
                           active
-                            ? "text-ink"
-                            : "border border-ink/15 text-slate hover:border-ink/40 hover:text-ink"
+                            ? "text-paper"
+                            : "border border-white/15 text-slate hover:border-white/40 hover:text-paper"
                         }`}
                       >
                         {active && (

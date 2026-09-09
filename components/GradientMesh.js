@@ -11,14 +11,14 @@ export default function GradientMesh({ variant = "light" }) {
 
   const blobs = isDark
     ? [
-        { color: "#C9A15A", size: 520, top: "-12%", left: "-8%", delay: 0 },
-        { color: "#0FA968", size: 420, top: "55%", left: "62%", delay: 2 },
-        { color: "#A67F3D", size: 380, top: "8%", left: "72%", delay: 4 },
+        { color: "#8B5CF6", size: 520, top: "-12%", left: "-8%", delay: 0 },
+        { color: "#34D399", size: 420, top: "55%", left: "62%", delay: 2 },
+        { color: "#C026D3", size: 380, top: "8%", left: "72%", delay: 4 },
       ]
     : [
-        { color: "#DEBD84", size: 480, top: "-10%", left: "5%", delay: 0 },
-        { color: "#C9A15A", size: 380, top: "40%", left: "75%", delay: 1.6 },
-        { color: "#0E1526", size: 340, top: "70%", left: "10%", delay: 3.2 },
+        { color: "#A78BFA", size: 480, top: "-10%", left: "5%", delay: 0 },
+        { color: "#8B5CF6", size: 380, top: "40%", left: "75%", delay: 1.6 },
+        { color: "#0B0A14", size: 340, top: "70%", left: "10%", delay: 3.2 },
       ];
 
   return (

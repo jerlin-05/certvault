@@ -66,13 +66,13 @@ export default function ChangePasswordModal({ onClose }) {
         exit={{ opacity: 0, scale: 0.96, y: 6 }}
         transition={{ type: "spring", stiffness: 340, damping: 28 }}
         onClick={(e) => e.stopPropagation()}
-        className="my-auto max-h-[90vh] w-full max-w-sm overflow-y-auto rounded-2xl border border-ink/10 bg-paper shadow-card"
+        className="my-auto max-h-[90vh] w-full max-w-sm overflow-y-auto rounded-2xl border border-white/10 bg-ink-soft shadow-card"
       >
-        <div className="flex items-center justify-between border-b border-ink/10 px-6 py-4">
-          <p className="font-display text-lg text-ink">Change password</p>
+        <div className="flex items-center justify-between border-b border-white/10 px-6 py-4">
+          <p className="font-display text-lg text-paper">Change password</p>
           <button
             onClick={onClose}
-            className="flex h-8 w-8 items-center justify-center rounded-full text-slate transition hover:bg-ink/5 hover:text-ink"
+            className="flex h-8 w-8 items-center justify-center rounded-full text-slate transition hover:bg-white/5 hover:text-paper"
             aria-label="Close"
           >
             <X size={17} />
@@ -86,7 +86,7 @@ export default function ChangePasswordModal({ onClose }) {
             </p>
             <button
               onClick={onClose}
-              className="mt-5 w-full rounded-xl border border-ink/15 py-2.5 text-sm font-medium text-ink transition hover:border-ink/40"
+              className="mt-5 w-full rounded-xl border border-white/15 py-2.5 text-sm font-medium text-paper transition hover:border-white/40"
             >
               Done
             </button>
@@ -126,14 +126,14 @@ export default function ChangePasswordModal({ onClose }) {
               <button
                 type="button"
                 onClick={onClose}
-                className="flex-1 rounded-xl border border-ink/15 py-2.5 text-sm font-medium text-ink transition hover:border-ink/40 active:scale-95"
+                className="flex-1 rounded-xl border border-white/15 py-2.5 text-sm font-medium text-paper transition hover:border-white/40 active:scale-95"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={saving}
-                className="flex-1 rounded-xl bg-gold py-2.5 text-sm font-semibold text-ink transition hover:bg-gold-light disabled:opacity-60 active:scale-95"
+                className="flex-1 rounded-xl bg-gold py-2.5 text-sm font-semibold text-paper transition hover:bg-gold-light disabled:opacity-60 active:scale-95"
               >
                 {saving ? "Saving…" : "Save password"}
               </button>

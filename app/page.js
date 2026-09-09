@@ -40,7 +40,7 @@ const features = [
 
 export default function LandingPage() {
   return (
-    <main className="min-h-screen overflow-hidden bg-paper">
+    <main className="min-h-screen overflow-hidden bg-ink">
       {/* ---------- Header ---------- */}
       <header className="relative z-20 border-b border-white/10 bg-ink">
         <div className="container-page flex items-center justify-between py-5">
@@ -75,7 +75,7 @@ export default function LandingPage() {
             </Link>
             <Link
               href="/register"
-              className="rounded-xl bg-gold px-4 py-2.5 text-sm font-medium text-ink shadow-glow transition hover:bg-gold-light active:scale-95"
+              className="rounded-xl bg-gold px-4 py-2.5 text-sm font-medium text-paper shadow-glow transition hover:bg-gold-light active:scale-95"
             >
               Get started
             </Link>
@@ -117,7 +117,7 @@ export default function LandingPage() {
             <div className="mt-9 flex flex-wrap items-center gap-4">
               <Link
                 href="/register"
-                className="group flex items-center gap-2 rounded-xl bg-gold px-6 py-3.5 text-sm font-semibold text-ink shadow-glow transition hover:bg-gold-light active:scale-95"
+                className="group flex items-center gap-2 rounded-xl bg-gold px-6 py-3.5 text-sm font-semibold text-paper shadow-glow transition hover:bg-gold-light active:scale-95"
               >
                 Start your vault
                 <ArrowRight
@@ -147,13 +147,13 @@ export default function LandingPage() {
       </section>
 
       {/* ---------- Features ---------- */}
-      <section id="features" className="relative bg-paper">
+      <section id="features" className="relative bg-ink">
         <div className="container-page py-24">
           <div className="mx-auto max-w-xl text-center">
             <span className="text-xs font-medium uppercase tracking-wider text-gold-dark">
               Why CertVault
             </span>
-            <h2 className="mt-3 font-display text-3xl text-ink sm:text-4xl">
+            <h2 className="mt-3 font-display text-3xl text-paper sm:text-4xl">
               Everything under control
             </h2>
             <p className="mt-4 text-[15px] leading-relaxed text-slate">
@@ -170,12 +170,12 @@ export default function LandingPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="rounded-2xl border border-ink/10 bg-paper-card p-7 shadow-card transition hover:-translate-y-1 hover:shadow-glow"
+                className="rounded-2xl border border-white/10 bg-paper-card p-7 shadow-card transition hover:-translate-y-1 hover:shadow-glow"
               >
                 <span className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl bg-gold-soft text-gold-dark">
                   <f.icon size={19} strokeWidth={1.75} />
                 </span>
-                <h3 className="font-display text-lg text-ink">{f.title}</h3>
+                <h3 className="font-display text-lg text-paper">{f.title}</h3>
                 <p className="mt-2.5 text-[15px] leading-relaxed text-slate">
                   {f.body}
                 </p>
@@ -203,7 +203,7 @@ export default function LandingPage() {
               <p className="font-display text-base text-paper">
                 Good afternoon, Alex 👋
               </p>
-              <span className="rounded-xl bg-gold px-3 py-1.5 text-xs font-medium text-ink">
+              <span className="rounded-xl bg-gold px-3 py-1.5 text-xs font-medium text-paper">
                 + Add certificate
               </span>
             </div>
@@ -267,7 +267,7 @@ export default function LandingPage() {
             </p>
             <Link
               href="/register"
-              className="mt-8 inline-flex items-center gap-2 rounded-xl bg-gold px-6 py-3.5 text-sm font-semibold text-ink shadow-glow transition hover:bg-gold-light active:scale-95"
+              className="mt-8 inline-flex items-center gap-2 rounded-xl bg-gold px-6 py-3.5 text-sm font-semibold text-paper shadow-glow transition hover:bg-gold-light active:scale-95"
             >
               Explore the dashboard
               <ArrowRight size={16} />
@@ -277,9 +277,9 @@ export default function LandingPage() {
       </section>
 
       {/* ---------- Testimonial / CTA ---------- */}
-      <section className="bg-paper">
+      <section className="bg-ink">
         <div className="container-page py-24 text-center">
-          <p className="mx-auto max-w-2xl font-display text-2xl italic leading-relaxed text-ink sm:text-3xl">
+          <p className="mx-auto max-w-2xl font-display text-2xl italic leading-relaxed text-paper sm:text-3xl">
             "CertVault has saved me from missing critical renewals. It's a
             must-have."
           </p>
@@ -297,7 +297,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <footer className="border-t border-ink/10">
+      <footer className="border-t border-white/10">
         <div className="container-page flex flex-col items-center justify-between gap-4 py-10 text-xs text-slate-light sm:flex-row">
           <div className="flex items-center gap-2">
             <SealMark small />
@@ -313,7 +313,7 @@ export default function LandingPage() {
 function SealMark({ small }) {
   return (
     <span
-      className={`flex items-center justify-center rounded-full bg-seal font-semibold text-ink ${
+      className={`flex items-center justify-center rounded-full bg-seal font-semibold text-paper ${
         small ? "h-5 w-5 text-[9px]" : "h-7 w-7 text-[11px]"
       }`}
     >
@@ -376,7 +376,7 @@ function MockCard({ className, style, title, issuer, date, tone, badge }) {
       className={`animate-float w-64 rounded-2xl border border-white/10 bg-ink-soft p-5 shadow-dark transition-shadow duration-300 hover:shadow-glow ${className}`}
     >
       <div className="mb-4 flex items-center justify-between">
-        <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-seal text-[10px] font-bold text-ink">
+        <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-seal text-[10px] font-bold text-paper">
           {title[0]}
         </span>
         <span

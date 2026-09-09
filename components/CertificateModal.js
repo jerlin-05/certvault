@@ -134,15 +134,15 @@ export default function CertificateModal({ initial, onClose, onSaved }) {
         exit={{ opacity: 0, scale: 0.96, y: 10 }}
         transition={{ type: "spring", stiffness: 300, damping: 28 }}
         onClick={(e) => e.stopPropagation()}
-        className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-xl border border-ink/10 bg-paper shadow-card"
+        className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-xl border border-white/10 bg-ink-soft shadow-card"
       >
-        <div className="flex items-center justify-between border-b border-ink/10 px-6 py-4">
-          <h2 className="font-display text-lg text-ink">
+        <div className="flex items-center justify-between border-b border-white/10 px-6 py-4">
+          <h2 className="font-display text-lg text-paper">
             {isEdit ? "Edit certificate" : "Add a certificate"}
           </h2>
           <button
             onClick={onClose}
-            className="flex h-8 w-8 items-center justify-center rounded-full text-slate transition hover:bg-ink/5 hover:text-ink"
+            className="flex h-8 w-8 items-center justify-center rounded-full text-slate transition hover:bg-white/5 hover:text-paper"
             aria-label="Close"
           >
             <X size={17} />
@@ -153,7 +153,7 @@ export default function CertificateModal({ initial, onClose, onSaved }) {
           <button
             type="button"
             onClick={() => fileInputRef.current?.click()}
-            className="flex h-32 w-full items-center justify-center overflow-hidden rounded-xl border border-dashed border-ink/20 bg-ink-light/[0.03] transition hover:border-gold"
+            className="flex h-32 w-full items-center justify-center overflow-hidden rounded-xl border border-dashed border-white/20 bg-white/[0.03] transition hover:border-gold"
           >
             {imagePreview ? (
               // eslint-disable-next-line @next/next/no-img-element
@@ -278,14 +278,14 @@ export default function CertificateModal({ initial, onClose, onSaved }) {
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 rounded-xl border border-ink/15 py-2.5 text-sm font-medium text-ink transition hover:border-ink/40"
+              className="flex-1 rounded-xl border border-white/15 py-2.5 text-sm font-medium text-paper transition hover:border-white/40"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={saving}
-              className="flex-1 rounded-xl bg-gold py-2.5 text-sm font-semibold text-ink transition hover:bg-gold-light disabled:opacity-60"
+              className="flex-1 rounded-xl bg-gold py-2.5 text-sm font-semibold text-paper transition hover:bg-gold-light disabled:opacity-60"
             >
               {saving ? "Saving…" : isEdit ? "Save changes" : "Add certificate"}
             </button>
@@ -296,18 +296,18 @@ export default function CertificateModal({ initial, onClose, onSaved }) {
       <style jsx global>{`
         .input {
           width: 100%;
-          border: 1px solid rgba(14, 21, 38, 0.15);
+          border: 1px solid rgba(255, 255, 255, 0.15);
           border-radius: 12px;
           padding: 0.7rem 0.85rem;
           font-size: 0.875rem;
-          background: #ffffff;
-          color: #0e1526;
+          background: #14111f;
+          color: #f5f3fa;
           outline: none;
           transition: border-color 0.15s ease, box-shadow 0.15s ease;
         }
         .input:focus {
-          border-color: #c9a15a;
-          box-shadow: 0 0 0 3px rgba(201, 161, 90, 0.15);
+          border-color: #8b5cf6;
+          box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.18);
         }
       `}</style>
     </motion.div>

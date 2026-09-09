@@ -23,7 +23,7 @@ export default function StatBar({ certificates }) {
   ];
 
   const toneStyles = {
-    ink: "bg-ink/[0.06] text-ink",
+    ink: "bg-white/[0.06] text-paper",
     amber: "bg-amber-light text-amber-dark",
     rust: "bg-rust-light text-rust-dark",
     forest: "bg-forest-light text-forest-dark",
@@ -38,11 +38,11 @@ export default function StatBar({ certificates }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35, delay: i * 0.05 }}
           whileHover={{ y: -3 }}
-          className="flex items-center justify-between gap-3 rounded-2xl border border-ink/10 bg-paper-card px-5 py-4 shadow-card"
+          className="flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-paper-card px-5 py-4 shadow-card"
         >
           <div>
             <span className="text-xs text-slate">{s.label}</span>
-            <p className="mt-1.5 font-display text-2xl text-ink">
+            <p className="mt-1.5 font-display text-2xl text-paper">
               <AnimatedCounter value={s.value} />
             </p>
           </div>

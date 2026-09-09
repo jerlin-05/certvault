@@ -40,7 +40,7 @@ export default function UserMenu({ user }) {
       <button
         onClick={() => setOpen((o) => !o)}
         aria-label="Account menu"
-        className="flex h-9 w-9 items-center justify-center rounded-full bg-ink/[0.06] text-xs font-medium text-ink transition hover:bg-ink/[0.1]"
+        className="flex h-9 w-9 items-center justify-center rounded-full bg-white/[0.06] text-xs font-medium text-paper transition hover:bg-white/[0.1]"
       >
         {user?.name?.[0]?.toUpperCase() || "U"}
       </button>
@@ -52,10 +52,10 @@ export default function UserMenu({ user }) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -6, scale: 0.97 }}
             transition={{ duration: 0.15 }}
-            className="absolute right-0 top-12 z-30 w-64 overflow-hidden rounded-2xl border border-ink/10 bg-paper-card shadow-card"
+            className="absolute right-0 top-12 z-30 w-64 overflow-hidden rounded-2xl border border-white/10 bg-paper-card shadow-card"
           >
-            <div className="border-b border-ink/10 px-4 py-3.5">
-              <p className="truncate text-sm font-medium text-ink">
+            <div className="border-b border-white/10 px-4 py-3.5">
+              <p className="truncate text-sm font-medium text-paper">
                 {user?.name}
               </p>
               <p className="truncate text-xs text-slate">{user?.email}</p>
@@ -66,7 +66,7 @@ export default function UserMenu({ user }) {
                   setOpen(false);
                   setShowChangePassword(true);
                 }}
-                className="flex w-full items-center gap-2.5 rounded-xl px-2.5 py-2.5 text-left text-sm text-ink transition hover:bg-ink/[0.05]"
+                className="flex w-full items-center gap-2.5 rounded-xl px-2.5 py-2.5 text-left text-sm text-paper transition hover:bg-white/[0.05]"
               >
                 <KeyRound size={15} strokeWidth={1.9} />
                 Change password

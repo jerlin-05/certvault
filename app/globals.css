@@ -7,15 +7,19 @@
     -webkit-font-smoothing: antialiased;
     scroll-behavior: smooth;
     scroll-padding-top: 84px;
+    color-scheme: dark;
   }
+
   body {
-    @apply bg-paper text-ink font-sans;
+    @apply bg-ink text-paper font-sans;
   }
+
   ::selection {
-    @apply bg-gold/30 text-ink;
+    @apply bg-gold/30 text-paper;
   }
+
   :focus-visible {
-    outline: 2px solid #C9A15A;
+    outline: 2px solid #8B5CF6;
     outline-offset: 2px;
   }
 }
@@ -28,7 +32,7 @@
 
 /* Subtle engraved-paper texture used behind the certificate cards */
 .paper-texture {
-  background-image: radial-gradient(#121b2e0d 1px, transparent 1px);
+  background-image: radial-gradient(#ffffff0d 1px, transparent 1px);
   background-size: 18px 18px;
 }
 
@@ -39,6 +43,7 @@
     opacity: 0;
     transform: translateY(14px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -49,6 +54,7 @@
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -59,6 +65,7 @@
     opacity: 0;
     transform: scale(0.96) translateY(6px);
   }
+
   to {
     opacity: 1;
     transform: scale(1) translateY(0);
@@ -69,16 +76,19 @@
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
 }
 
 @keyframes float-y {
+
   0%,
   100% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(-8px);
   }
@@ -88,6 +98,7 @@
   from {
     background-position: -300px 0;
   }
+
   to {
     background-position: 300px 0;
   }
@@ -95,10 +106,11 @@
 
 @keyframes pulse-ring {
   0% {
-    box-shadow: 0 0 0 0 rgba(161, 53, 43, 0.25);
+    box-shadow: 0 0 0 0 rgba(251, 113, 133, 0.3);
   }
+
   100% {
-    box-shadow: 0 0 0 8px rgba(161, 53, 43, 0);
+    box-shadow: 0 0 0 8px rgba(251, 113, 133, 0);
   }
 }
 
@@ -106,6 +118,7 @@
   from {
     transform: scaleX(0);
   }
+
   to {
     transform: scaleX(1);
   }
@@ -136,17 +149,16 @@
 }
 
 .skeleton {
-  background: linear-gradient(
-    90deg,
-    rgba(18, 27, 46, 0.06) 25%,
-    rgba(18, 27, 46, 0.1) 37%,
-    rgba(18, 27, 46, 0.06) 63%
-  );
+  background: linear-gradient(90deg,
+      rgba(255, 255, 255, 0.04) 25%,
+      rgba(255, 255, 255, 0.09) 37%,
+      rgba(255, 255, 255, 0.04) 63%);
   background-size: 400px 100%;
   animation: shimmer 1.4s ease-in-out infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .animate-fade-in-up,
   .animate-fade-in,
   .animate-scale-in,

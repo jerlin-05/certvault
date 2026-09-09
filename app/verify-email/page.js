@@ -128,12 +128,12 @@ function VerifyEmailForm() {
       <p className="mb-2 text-xs font-medium tracking-wide text-gold-dark">
         Verify your email
       </p>
-      <h1 className="font-display text-[1.85rem] leading-tight text-ink">
+      <h1 className="font-display text-[1.85rem] leading-tight text-paper">
         Check your inbox
       </h1>
       <p className="mt-2 text-sm text-slate">
         We sent a {OTP_LENGTH}-digit code to{" "}
-        <span className="font-medium text-ink">{email || "your email"}</span>.
+        <span className="font-medium text-paper">{email || "your email"}</span>.
         Enter it below to finish setting up your vault.
       </p>
 
@@ -149,7 +149,7 @@ function VerifyEmailForm() {
               value={digit}
               onChange={(e) => updateDigit(i, e.target.value)}
               onKeyDown={(e) => handleKeyDown(i, e)}
-              className="h-14 w-full rounded-xl border border-ink/15 bg-paper-card text-center text-xl font-medium text-ink outline-none transition focus:border-gold focus:ring-1 focus:ring-gold/25"
+              className="h-14 w-full rounded-xl border border-white/15 bg-paper-card text-center text-xl font-medium text-paper outline-none transition focus:border-gold focus:ring-1 focus:ring-gold/25"
             />
           ))}
         </div>
@@ -168,7 +168,7 @@ function VerifyEmailForm() {
         <button
           type="submit"
           disabled={verifying}
-          className="group flex w-full items-center justify-center gap-2 rounded-xl bg-gold px-4 py-3 text-sm font-semibold text-ink transition hover:bg-gold-light disabled:opacity-60"
+          className="group flex w-full items-center justify-center gap-2 rounded-xl bg-gold px-4 py-3 text-sm font-semibold text-paper transition hover:bg-gold-light disabled:opacity-60"
         >
           {verifying ? "Verifying…" : "Verify email"}
           {!verifying && (

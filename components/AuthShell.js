@@ -43,7 +43,7 @@ export default function AuthShell({ children }) {
         />
 
         <Link href="/" className="relative flex items-center gap-2.5">
-          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-seal text-xs font-semibold text-ink">
+          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-seal text-xs font-semibold text-paper">
             CV
           </span>
           <span className="font-display text-xl text-paper">CertVault</span>
@@ -82,7 +82,7 @@ export default function AuthShell({ children }) {
         </p>
       </section>
 
-      <section className="flex items-center justify-center bg-paper px-6 py-16">
+      <section className="flex items-center justify-center bg-ink px-6 py-16">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
@@ -93,7 +93,7 @@ export default function AuthShell({ children }) {
             href="/"
             className="mb-10 flex items-center gap-2 text-sm text-slate lg:hidden"
           >
-            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-seal text-[10px] font-semibold text-ink">
+            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-seal text-[10px] font-semibold text-paper">
               CV
             </span>
             CertVault
