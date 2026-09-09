@@ -276,26 +276,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ---------- Testimonial / CTA ---------- */}
-      <section className="bg-ink">
-        <div className="container-page py-24 text-center">
-          <p className="mx-auto max-w-2xl font-display text-2xl italic leading-relaxed text-paper sm:text-3xl">
-            "CertVault has saved me from missing critical renewals. It's a
-            must-have."
-          </p>
-          <p className="mt-5 text-sm text-slate">— Sarah K., IT Professional</p>
-
-          <div className="mt-14">
-            <Link
-              href="/register"
-              className="inline-flex items-center gap-2 rounded-xl bg-ink px-7 py-3.5 text-sm font-semibold text-paper transition hover:bg-ink-light active:scale-95"
-            >
-              Start your vault — it's free
-              <ArrowRight size={16} />
-            </Link>
-          </div>
-        </div>
-      </section>
+      {/* ---------- Footer ---------- */}
 
       <footer className="border-t border-white/10">
         <div className="container-page flex flex-col items-center justify-between gap-4 py-10 text-xs text-slate-light sm:flex-row">

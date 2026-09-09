@@ -20,6 +20,11 @@ export const metadata = {
   title: "CertVault — Never miss a renewal",
   description:
     "Keep every certificate, license and credential in one place, with email alerts before they expire.",
+     icons: {
+    icon: "/favicon.png",
+    shortcut: "/favicon.png",
+    apple: "/favicon.png",
+     }
 };
 
 export default function RootLayout({ children }) {
