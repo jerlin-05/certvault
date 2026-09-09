@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { getCertificateStatus, formatDate, daysUntil } from "@/lib/status";
 import { getCategoryTheme } from "@/lib/category";
+import Portal from "@/components/Portal";
 
 const toneStyles = {
   rust: "bg-rust-light text-rust-dark",
@@ -72,6 +73,7 @@ export default function CertificateViewModal({
       : "Needs renewal";
 
   return (
+    <Portal>
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -239,5 +241,6 @@ export default function CertificateViewModal({
         </div>
       </motion.div>
     </motion.div>
+    </Portal>
   );
 }

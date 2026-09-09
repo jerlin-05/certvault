@@ -3,6 +3,7 @@
 import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { X, ImagePlus } from "lucide-react";
+import Portal from "@/components/Portal";
 
 import { CATEGORY_THEME } from "@/lib/category";
 
@@ -118,12 +119,13 @@ export default function CertificateModal({ initial, onClose, onSaved }) {
   }
 
   return (
+    <Portal>
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.2 }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-ink/50 px-4 py-8 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-ink/50 px-4 py-8 backdrop-blur-sm"
       onClick={onClose}
     >
       <motion.div
@@ -294,20 +296,22 @@ export default function CertificateModal({ initial, onClose, onSaved }) {
       <style jsx global>{`
         .input {
           width: 100%;
-          border: 1px solid rgba(18, 27, 46, 0.15);
-          border-radius: 2px;
-          padding: 0.55rem 0.75rem;
+          border: 1px solid rgba(14, 21, 38, 0.15);
+          border-radius: 12px;
+          padding: 0.7rem 0.85rem;
           font-size: 0.875rem;
-          background: #fbfaf7;
-          color: #121b2e;
+          background: #ffffff;
+          color: #0e1526;
           outline: none;
-          transition: border-color 0.15s ease;
+          transition: border-color 0.15s ease, box-shadow 0.15s ease;
         }
         .input:focus {
-          border-color: #b8863b;
+          border-color: #c9a15a;
+          box-shadow: 0 0 0 3px rgba(201, 161, 90, 0.15);
         }
       `}</style>
     </motion.div>
+    </Portal>
   );
 }
 

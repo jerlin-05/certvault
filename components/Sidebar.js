@@ -32,8 +32,8 @@ export default function Sidebar({ user, statusFilter, onFilter }) {
                 key={item.key}
                 onClick={() => onFilter?.(item.key)}
                 className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition ${active
-                  ? "bg-white/[0.07] text-paper"
-                  : "text-paper/55 hover:bg-white/[0.04] hover:text-paper/85"
+                    ? "bg-white/[0.07] text-paper"
+                    : "text-paper/55 hover:bg-white/[0.04] hover:text-paper/85"
                   }`}
               >
                 <item.icon size={17} strokeWidth={1.9} />
@@ -47,18 +47,13 @@ export default function Sidebar({ user, statusFilter, onFilter }) {
           <button
             onClick={() => onFilter?.("archived")}
             className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition ${statusFilter === "archived"
-              ? "bg-white/[0.07] text-paper"
-              : "text-paper/40 hover:bg-white/[0.04] hover:text-paper/70"
+                ? "bg-white/[0.07] text-paper"
+                : "text-paper/40 hover:bg-white/[0.04] hover:text-paper/70"
               }`}
           >
             <Archive size={17} strokeWidth={1.9} />
             Archive
           </button>
-        </div>
-      </div>
-
-      <div className="border-t border-white/10 pt-4">
-        <div className="flex items-center gap-3 rounded-xl px-2 py-2">
         </div>
       </div>
     </aside>

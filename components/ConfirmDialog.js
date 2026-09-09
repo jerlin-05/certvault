@@ -2,15 +2,17 @@
 
 import { motion } from "framer-motion";
 import { TriangleAlert } from "lucide-react";
+import Portal from "@/components/Portal";
 
 export default function ConfirmDialog({ title, body, onConfirm, onCancel }) {
   return (
+    <Portal>
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.18 }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-ink/50 px-4 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-ink/50 px-4 py-8 backdrop-blur-sm"
       onClick={onCancel}
     >
       <motion.div
@@ -19,7 +21,7 @@ export default function ConfirmDialog({ title, body, onConfirm, onCancel }) {
         exit={{ opacity: 0, scale: 0.95, y: 6 }}
         transition={{ type: "spring", stiffness: 340, damping: 28 }}
         onClick={(e) => e.stopPropagation()}
-        className="w-full max-w-sm rounded-2xl border border-ink/10 bg-paper-card p-6 shadow-card"
+        className="my-auto max-h-[90vh] w-full max-w-sm overflow-y-auto rounded-2xl border border-ink/10 bg-paper-card p-6 shadow-card"
       >
         <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-rust-light text-rust-dark">
           <TriangleAlert size={19} strokeWidth={1.9} />
@@ -42,5 +44,6 @@ export default function ConfirmDialog({ title, body, onConfirm, onCancel }) {
         </div>
       </motion.div>
     </motion.div>
+    </Portal>
   );
 }
